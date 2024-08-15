@@ -1,10 +1,17 @@
 {
-	"compilerOptions": {
-		"allowSyntheticDefaultImports": true,
-		"noImplicitAny": true,
-		"module": "es6",
-		"target": "es5",
-		"allowJs": true
-	},
-	"files": ["src/index.ts"]
+    "include": ["src/**/*"],
+    "compilerOptions": {
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": true,
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "jsx": "react-jsx",
+        "target": "es5",
+        "baseUrl": ".",
+        "allowJs": true,
+        "paths": {
+            "@/*": ["src/*"]
+        }
+    },
+    "files": ["src/index.tsx"]
 }
