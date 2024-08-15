@@ -1,9 +1,6 @@
 import { type RefObject, useEffect, useRef, useState } from "react";
 import useIntersectionObserver from "./useIntersectionObserver";
 
-export const PLACEHOLDER_SRC =
-    "https://www.totalwine.com/media/sys_master/cmsmedia/hff/h0e/8979036078110.png";
-
 export default function useImageLoader(
     rootRef: RefObject<HTMLDivElement>,
     image?: string,

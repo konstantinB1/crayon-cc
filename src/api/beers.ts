@@ -12,7 +12,7 @@ export type Beer = {
 
 export async function getBeers(): Promise<Beer[]> {
     try {
-        const response = await fetch("https://api.sampleapis.com/beers/ale");
+        const response = await fetch(process.env.API_ENDPOINT!);
         return (await response.json()) as Beer[];
     } catch (e) {
         throw new Error(`Failed to fetch beers: ${e}`);

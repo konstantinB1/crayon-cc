@@ -1,6 +1,5 @@
-import { Box, CardMedia, Skeleton, Stack, Typography } from "@mui/material";
-import ImageNotSupportedIcon from "@mui/icons-material/ImageNotSupported";
-import useImageLoader, { PLACEHOLDER_SRC } from "./hooks/useImageLoader";
+import { Box, CardMedia, Skeleton } from "@mui/material";
+import useImageLoader from "./hooks/useImageLoader";
 import { RefObject } from "react";
 
 export type ImageRendererProps = {
@@ -35,7 +34,7 @@ export default function ImageRenderer({ rootRef, image }: ImageRendererProps) {
             {!loading && (
                 <CardMedia
                     component="img"
-                    image={exists ? image : PLACEHOLDER_SRC}
+                    image={exists ? image : process.env.PLACEHOLDER_IMG_URL}
                     width="100%"
                     height="100%"
                     sx={{
