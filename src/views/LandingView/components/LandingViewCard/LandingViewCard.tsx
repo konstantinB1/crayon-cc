@@ -11,6 +11,8 @@ type LandingViewCardProps = {
 export default function LandingViewCard({ data }: LandingViewCardProps) {
     const rootRef = useRef<HTMLDivElement | null>(null);
 
+    console.log(rootRef);
+
     return (
         <Box
             ref={rootRef}

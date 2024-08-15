@@ -9,8 +9,6 @@ export default function LandingView() {
     const { beers } = useBearStore(({ beers }) => ({ beers }));
     const rootRef = useRef<HTMLDivElement | null>(null);
 
-    console.log(beers);
-
     return (
         <Grid container spacing={4}>
             <Grid item md={3} lg={3} position="sticky" top={0}>
