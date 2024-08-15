@@ -19,7 +19,7 @@ export default function LandingView() {
                 <Grid container spacing={4} ref={rootRef}>
                     {beers.map((beer) => (
                         <Grid item md={4} lg={4} key={beer.id}>
-                            <Card variant="outlined" elevation={1}>
+                            <Card variant="outlined">
                                 <CardMediaWithFallback data={beer} />
                             </Card>
                         </Grid>
