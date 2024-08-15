@@ -20,8 +20,8 @@ export default function useIntersectionObserver(root: HTMLElement) {
             },
             {
                 root: document,
-                rootMargin: "10px",
-                threshold: 1,
+                rootMargin: "0px",
+                threshold: 0.5,
             },
         );
 
