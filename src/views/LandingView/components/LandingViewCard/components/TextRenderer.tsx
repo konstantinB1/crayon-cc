@@ -41,7 +41,7 @@ export default function TextRenderer({ name, price }: TextRendererProps) {
                         <Typography
                             variant="h6"
                             color="primary"
-                            fontWeight={700}
+                            fontWeight={500}
                         >
                             {price}
                         </Typography>

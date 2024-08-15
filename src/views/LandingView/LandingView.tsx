@@ -9,6 +9,8 @@ export default function LandingView() {
     const { beers } = useBearStore(({ beers }) => ({ beers }));
     const rootRef = useRef<HTMLDivElement | null>(null);
 
+    console.log(beers);
+
     return (
         <Grid container spacing={4}>
             <Grid item md={3} lg={3} position="sticky" top={0}>
@@ -21,7 +23,13 @@ export default function LandingView() {
             <Grid item md={9} lg={9}>
                 <Grid container spacing={4} ref={rootRef}>
                     {beers.map((beer) => (
-                        <Grid item md={4} lg={4} key={beer.id}>
+                        <Grid
+                            item
+                            md={4}
+                            lg={4}
+                            key={beer.id}
+                            data-testid={`beer-${beer.id}`}
+                        >
                             <Card variant="outlined">
                                 <LandingViewCard data={beer} />
                             </Card>

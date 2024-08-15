@@ -20,9 +20,15 @@ export default function TextOverflow({ text }: TextOverflowProps) {
     } = useTheme();
 
     useEffect(() => {
-        bounds.current = titleRef?.current?.getBoundingClientRect();
-        const elHeight = titleRef?.current.getBoundingClientRect().height;
-        setIsOverflow(elHeight > TEXT_LINE_HEIGHT);
+        setIsOverflow((curState) => {
+            if (curState) {
+                return true;
+            }
+
+            bounds.current = titleRef?.current?.getBoundingClientRect();
+            const elHeight = titleRef?.current.getBoundingClientRect().height;
+            return elHeight > TEXT_LINE_HEIGHT;
+        });
     }, []);
 
     return (
