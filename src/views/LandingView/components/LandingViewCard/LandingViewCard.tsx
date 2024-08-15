@@ -1,15 +1,14 @@
 import { Box } from "@mui/material";
 import { useRef } from "react";
 import { type Beer } from "@/api/beers";
+import ImageRenderer from "./components/ImageRenderer";
+import TextRenderer from "./components/TextRenderer";
 
-import ImageRenderer from "./ImageRenderer";
-import TextRenderer from "./TextRenderer";
-
-type CardContentDataProps = {
+type LandingViewCardProps = {
     data: Beer;
 };
 
-export default function CardContentData({ data }: CardContentDataProps) {
+export default function LandingViewCard({ data }: LandingViewCardProps) {
     const rootRef = useRef<HTMLDivElement | null>(null);
 
     return (

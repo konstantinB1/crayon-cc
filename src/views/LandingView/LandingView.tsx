@@ -1,8 +1,9 @@
 import { Card, CardContent, Grid } from "@mui/material";
-import { useBearStore } from "../../store";
-import CardMediaWithFallback from "./components/CardContentData";
+import { useBearStore } from "@/store";
+import LandingViewCard from "./components/LandingViewCard";
 
 import { useRef } from "react";
+import LandingViewFilters from "./components/LandingViewFilters";
 
 export default function LandingView() {
     const { beers } = useBearStore(({ beers }) => ({ beers }));
@@ -12,7 +13,9 @@ export default function LandingView() {
         <Grid container spacing={4}>
             <Grid item md={3} lg={3} position="sticky" top={0}>
                 <Card variant="outlined">
-                    <CardContent>Filters</CardContent>
+                    <CardContent>
+                        <LandingViewFilters />
+                    </CardContent>
                 </Card>
             </Grid>
             <Grid item md={9} lg={9}>
@@ -20,7 +23,7 @@ export default function LandingView() {
                     {beers.map((beer) => (
                         <Grid item md={4} lg={4} key={beer.id}>
                             <Card variant="outlined">
-                                <CardMediaWithFallback data={beer} />
+                                <LandingViewCard data={beer} />
                             </Card>
                         </Grid>
                     ))}

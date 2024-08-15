@@ -1,6 +1,6 @@
 import { Box, CardMedia, Skeleton } from "@mui/material";
-import useImageLoader from "./hooks/useImageLoader";
 import { RefObject } from "react";
+import useImageLoader from "./hooks/useImageLoader";
 
 export type ImageRendererProps = {
     rootRef: RefObject<HTMLDivElement | null>;
