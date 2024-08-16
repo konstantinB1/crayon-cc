@@ -5,27 +5,27 @@ export default function useImageLoader(
     rootRef: RefObject<HTMLDivElement>,
     image?: string,
 ) {
-    const isIntersecting = useIntersectionObserver(rootRef.current);
-    const img = useRef<string | undefined>(undefined);
+    const isIntersecting = useIntersectionObserver(rootRef);
+    const imgRef = useRef<string | undefined>(undefined);
     const [exists, setExists] = useState(false);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (isIntersecting && image) {
-            const get = new Image();
+            const img = new Image();
 
-            get.onload = () => {
-                img.current = get.src;
+            img.onload = () => {
+                imgRef.current = img.src;
                 setExists(true);
                 setLoading(false);
             };
 
-            get.onerror = () => {
+            img.onerror = () => {
                 setExists(false);
                 setLoading(false);
             };
 
-            get.src = image;
+            img.src = image;
         }
     }, [image, isIntersecting]);
 

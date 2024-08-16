@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { getBeers } from "../api/beers";
-import { useBearStore } from "../store";
+import { getBeers } from "../services/beer/api-beers";
+import { useBeerRootStore } from "@/store";
 
 export default function useGetBeers() {
     const { setAllBeers, setFetching, setFetchInitial, fetchedInitial } =
-        useBearStore(
+        useBeerRootStore(
             ({
                 setAllBeers,
                 setFetchInitial,

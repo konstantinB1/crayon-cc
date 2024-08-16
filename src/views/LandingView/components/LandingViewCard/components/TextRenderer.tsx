@@ -1,25 +1,31 @@
-import { Beer } from "@/api/beers";
-import { useBearStore } from "@/store";
+import { useBeerRootStore, useCartStore } from "@/store";
 import {
     Box,
     CardContent,
     IconButton,
     Skeleton,
-    Tooltip,
     Typography,
 } from "@mui/material";
 import TextOverflow from "./TextOverflow";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { useTransition } from "react";
+import { Beer } from "@/services/beer/api-beers";
+import { formatPrice } from "@/utils/price-utils";
 
-export type TextRendererProps = Pick<Beer, "name" | "price">;
+export type TextRendererProps = Pick<Beer, "name" | "price" | "id">;
 
-export default function TextRenderer({ name, price }: TextRendererProps) {
-    const { fetching, fetchedInitial } = useBearStore(
+export default function TextRenderer({ id, name, price }: TextRendererProps) {
+    const { add: addToCart } = useCartStore(({ add, items }) => ({
+        add,
+        items,
+    }));
+    const { fetching, fetchedInitial } = useBeerRootStore(
         ({ fetching, fetchedInitial }) => ({
             fetching,
             fetchedInitial,
         }),
     );
+    const [isPending, startTransition] = useTransition();
 
     return (
         <CardContent>
@@ -43,13 +49,23 @@ export default function TextRenderer({ name, price }: TextRendererProps) {
                             color="primary"
                             fontWeight={500}
                         >
-                            {price}
+                            {formatPrice(price)}
                         </Typography>
-                        <Tooltip title="Add to cart">
-                            <IconButton size="small" color="primary">
+                        <Box display="flex">
+                            <IconButton
+                                size="small"
+                                color="primary"
+                                onClick={() => {
+                                    startTransition(() => {
+                                        if (!isPending) {
+                                            addToCart(id);
+                                        }
+                                    });
+                                }}
+                            >
                                 <AddCircleIcon />
                             </IconButton>
-                        </Tooltip>
+                        </Box>
                     </Box>
                 </Box>
             )}

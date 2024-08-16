@@ -1,6 +1,6 @@
 export type Beer = {
     placeholder: boolean;
-    price?: number;
+    price?: string | number;
     name?: string;
     image?: string;
     id?: number;

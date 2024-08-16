@@ -1,8 +1,10 @@
 import { Box } from "@mui/material";
 import { useRef } from "react";
-import { type Beer } from "@/api/beers";
+
 import ImageRenderer from "./components/ImageRenderer";
 import TextRenderer from "./components/TextRenderer";
+import CardStatus from "./components/CardStatus";
+import { Beer } from "@/services/beer/api-beers";
 
 type LandingViewCardProps = {
     data: Beer;
@@ -10,8 +12,6 @@ type LandingViewCardProps = {
 
 export default function LandingViewCard({ data }: LandingViewCardProps) {
     const rootRef = useRef<HTMLDivElement | null>(null);
-
-    console.log(rootRef);
 
     return (
         <Box
@@ -22,8 +22,9 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
             alignItems="center"
             flexDirection="column"
         >
-            <ImageRenderer rootRef={rootRef} image={data.image} />
-            <TextRenderer name={data.name} price={data.price} />
+            <CardStatus id={data.id} />
+            <ImageRenderer ref={rootRef} image={data.image} />
+            <TextRenderer id={data.id} name={data.name} price={data.price} />
         </Box>
     );
 }

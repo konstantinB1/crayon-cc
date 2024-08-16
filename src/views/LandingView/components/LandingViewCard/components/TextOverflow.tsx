@@ -11,7 +11,7 @@ const TEXT_LINE_HEIGHT = 24;
 export default function TextOverflow({ text }: TextOverflowProps) {
     const titleRef = useRef<HTMLParagraphElement | null>(null);
     const bounds = useRef<DOMRect | null>(null);
-    const [isOverflow, setIsOverflow] = useState(false);
+    const [isOverflow, setIsOverflow] = useState(true);
     const [isHover, setIsHover] = useState(false);
     const {
         palette: {
@@ -50,8 +50,11 @@ export default function TextOverflow({ text }: TextOverflowProps) {
                     <motion.div
                         style={{
                             position: "absolute",
-                            height: bounds?.current?.height + TEXT_LINE_HEIGHT,
+                            height:
+                                bounds?.current?.height + 2 * TEXT_LINE_HEIGHT,
                             backgroundColor: paperBg,
+                            width: bounds?.current?.width,
+                            zIndex: 20,
                         }}
                         initial={{
                             opacity: 0,
@@ -63,13 +66,13 @@ export default function TextOverflow({ text }: TextOverflowProps) {
                             opacity: 0,
                         }}
                     >
-                        <Typography variant="h5">{text}</Typography>
+                        <Typography variant="h6">{text}</Typography>
                     </motion.div>
                 )}
             </AnimatePresence>
             <Typography
                 ref={titleRef}
-                variant="h5"
+                variant="h6"
                 textOverflow={isOverflow ? "ellipsis" : "initial"}
                 overflow={isOverflow ? "hidden" : "initial"}
                 whiteSpace={isOverflow ? "nowrap" : "initial"}
