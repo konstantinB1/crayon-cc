@@ -40,12 +40,13 @@ export const filterBeers = (beers: Beer[], value: number[]) => {
 const ensureValidInt = (value: number, def: number = 0) =>
     value === Infinity || value === -Infinity || isNaN(value) ? def : value;
 
+const MAX_ESTIMATE = 120;
 export const getMinMaxPrice = (beers: Beer[]) => {
     const prices = beers.map(({ price }) => priceToInt(price));
     const min = Math.min(...prices);
     const max = Math.max(...prices);
 
-    return [ensureValidInt(min), ensureValidInt(max, 1000)];
+    return [ensureValidInt(min), ensureValidInt(max, MAX_ESTIMATE)];
 };
 
 export const applySort = (beers: Beer[], { sortKey, priceRange }: FormState) =>

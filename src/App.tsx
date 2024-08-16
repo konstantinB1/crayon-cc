@@ -20,10 +20,10 @@ export default function App() {
                 })}
             />
             <Container
-                maxWidth="xl"
+                maxWidth="lg"
                 sx={{
                     margin: "auto",
-                }}  
+                }}
             >
                 <StatusBar />
                 <BrowserRouter>
