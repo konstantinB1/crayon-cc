@@ -43,6 +43,7 @@ export default function useFilter() {
     const draft = useRef<Beer[]>([]);
 
     const getMinAndMaxPrice = useMemo(() => _getMinAndMaxPrice(beers), [beers]);
+    console.log(getMinAndMaxPrice);
 
     if (draft.current.length === 0) {
         draft.current = viewBeers;

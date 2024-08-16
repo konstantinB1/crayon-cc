@@ -37,10 +37,22 @@ export const filterBeers = (beers: Beer[], value: number[]) => {
     });
 };
 
+const ensureValidInt = (value: number, def: number = 0) =>
+    value === Infinity || value === -Infinity || isNaN(value) ? def : value;
+
 export const getMinMaxPrice = (beers: Beer[]) => {
     const prices = beers.map(({ price }) => priceToInt(price));
-    return [Math.min(...prices), Math.max(...prices)];
+    const min = Math.min(...prices);
+    const max = Math.max(...prices);
+
+    return [ensureValidInt(min), ensureValidInt(max, 1000)];
 };
 
 export const applySort = (beers: Beer[], { sortKey, priceRange }: FormState) =>
     filterBeers(sortBeers(beers, sortKey), priceRange);
+
+export const removeSingleItemFromArr = (arr: number[], id: number) => {
+    const index = arr.indexOf(id);
+    if (index === -1) return arr;
+    return [...arr.slice(0, index), ...arr.slice(index + 1)];
+};

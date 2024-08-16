@@ -12,18 +12,18 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
 
         return (
             <Box
-                width={160}
-                height={160}
+                width={180}
+                height={180}
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 margin="auto"
-                mt={4}
+                my={4}
             >
                 {loading && (
                     <Skeleton
-                        width="inherit"
-                        height="inherit"
+                        width={180}
+                        height={180}
                         variant="rectangular"
                         animation="wave"
                         sx={(theme) => ({

@@ -1,8 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingView from "./views/LandingView/LandingView";
 import useGetBeers from "./hooks/useGetBeers";
-import { Box, GlobalStyles, ThemeProvider } from "@mui/material";
+import { Box, Container, GlobalStyles, ThemeProvider } from "@mui/material";
 import theme from "./theme";
+import ProductDetail from "./views/ProductDetail/ProductDetails";
+import StatusBar from "./views/LandingView/components/StatusBar/StatusBar";
 
 export default function App() {
     useGetBeers();
@@ -17,13 +19,20 @@ export default function App() {
                     },
                 })}
             />
-            <Box width={1200} margin="auto">
+            <Container
+                maxWidth="xl"
+                sx={{
+                    margin: "auto",
+                }}  
+            >
+                <StatusBar />
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<LandingView />} />
+                        <Route path="/beer/:id" element={<ProductDetail />} />
                     </Routes>
                 </BrowserRouter>
-            </Box>
+            </Container>
         </ThemeProvider>
     );
 }

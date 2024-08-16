@@ -21,8 +21,8 @@ export default function LandingViewFilters() {
     const { sortKey: currentSortKey } = formState;
 
     return (
-        <Stack>
-            <Typography variant="h4" mb={2}>
+        <Stack position="sticky" top={10}>
+            <Typography variant="body1" mb={2}>
                 Filters
             </Typography>
             <Stack display="flex" flexDirection="column" gap={2}>

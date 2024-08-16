@@ -1,6 +1,8 @@
 import { OrderBy } from "@/types";
 import { getByPath } from "./object-utils";
 
+export const createRandomPrice = () => Math.floor(Math.random() * 300) / 100;
+
 export const priceToInt = (price?: string | number) => {
     if (typeof price === "number") {
         return price;
@@ -8,6 +10,12 @@ export const priceToInt = (price?: string | number) => {
 
     try {
         if (typeof price === "string") {
+            // API started to return {{price}} and {{&randomprice}} as a string
+            // all of a sudden, so we need to handle this case
+            if (price === "{{price}}" || price === "{{&randomprice}}") {
+                return createRandomPrice();
+            }
+
             return parseFloat(price?.replace("$", ""));
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
@@ -13,11 +13,6 @@ export default function TextOverflow({ text }: TextOverflowProps) {
     const bounds = useRef<DOMRect | null>(null);
     const [isOverflow, setIsOverflow] = useState(true);
     const [isHover, setIsHover] = useState(false);
-    const {
-        palette: {
-            background: { paper: paperBg },
-        },
-    } = useTheme();
 
     useEffect(() => {
         setIsOverflow((curState) => {
@@ -33,6 +28,7 @@ export default function TextOverflow({ text }: TextOverflowProps) {
 
     return (
         <Box
+            height={24}
             position="relative"
             onMouseEnter={() => {
                 if (isOverflow) {
@@ -46,33 +42,34 @@ export default function TextOverflow({ text }: TextOverflowProps) {
             }}
         >
             <AnimatePresence>
-                {isHover && (
+                {isHover && isOverflow && (
                     <motion.div
                         style={{
                             position: "absolute",
                             height:
                                 bounds?.current?.height + 2 * TEXT_LINE_HEIGHT,
-                            backgroundColor: paperBg,
-                            width: bounds?.current?.width,
-                            zIndex: 20,
-                        }}
-                        initial={{
-                            opacity: 0,
+                            backgroundColor: "rgba(0, 0, 0, 0.2)",
+                            zIndex: 100,
+                            padding: "0 12px",
+                            width: "calc(100% - 24px)",
                         }}
                         animate={{
                             opacity: 1,
                         }}
-                        exit={{
-                            opacity: 0,
-                        }}
                     >
-                        <Typography variant="h6">{text}</Typography>
+                        <Typography sx={{}} variant="h6">
+                            {text}
+                        </Typography>
                     </motion.div>
                 )}
             </AnimatePresence>
             <Typography
                 ref={titleRef}
+                padding="0 12px"
                 variant="h6"
+                sx={{
+                    visibility: isHover ? "hidden" : "visible",
+                }}
                 textOverflow={isOverflow ? "ellipsis" : "initial"}
                 overflow={isOverflow ? "hidden" : "initial"}
                 whiteSpace={isOverflow ? "nowrap" : "initial"}

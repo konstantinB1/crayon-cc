@@ -24,7 +24,6 @@ export default function LandingView() {
 
     return (
         <Stack>
-            <StatusBar />
             <Grid container spacing={4}>
                 <Grid item md={3} lg={3} position="sticky" top={0}>
                     <Card variant="outlined">
@@ -50,9 +49,7 @@ export default function LandingView() {
                                 key={beer.id}
                                 data-testid={`beer-${beer.id}`}
                             >
-                                <Card variant="outlined">
-                                    <LandingViewCard data={beer} />
-                                </Card>
+                                <LandingViewCard data={beer} />
                             </Grid>
                         ))}
                     </Grid>
