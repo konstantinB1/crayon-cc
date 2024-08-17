@@ -1,23 +1,13 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
-import { useBeerFilterStore, useBeerRootStore } from "@/store";
+import useBoundStore from "@/store";
 import LandingViewCard from "./components/LandingViewCard";
 
 import { useRef } from "react";
 import LandingViewFilters from "./components/LandingViewFilters";
-import StatusBar from "./components/StatusBar/StatusBar";
 import { placeholderBeers } from "./LandingView.utils";
 
 export default function LandingView() {
-    const { fetchedInitial, fetching } = useBeerRootStore(
-        ({ fetching, fetchedInitial }) => ({
-            fetchedInitial,
-            fetching,
-        }),
-    );
-
-    const { viewBeers } = useBeerFilterStore(({ viewBeers }) => ({
-        viewBeers,
-    }));
+    const { fetchedInitial, viewBeers } = useBoundStore();
 
     const rootRef = useRef<HTMLDivElement | null>(null);
     const beers = fetchedInitial ? viewBeers : placeholderBeers;
@@ -25,7 +15,23 @@ export default function LandingView() {
     return (
         <Stack>
             <Grid container spacing={4}>
-                <Grid item md={3} lg={3} position="sticky" top={0}>
+                <Grid
+                    item
+                    md={3}
+                    lg={3}
+                    sm={12}
+                    xs={12}
+                    xl={3}
+                    position="sticky"
+                    zIndex={1000}
+                    sx={{
+                        top: {
+                            lg: 10,
+                            md: 10,
+                            sm: 40,
+                        },
+                    }}
+                >
                     <Card variant="outlined">
                         <CardContent>
                             <LandingViewFilters />
@@ -43,9 +49,25 @@ export default function LandingView() {
                         )}
                         {beers.map((beer) => (
                             <Grid
+                                sx={(theme) => ({
+                                    transition: theme.transitions.create(
+                                        "transform",
+                                        {
+                                            duration:
+                                                theme.transitions.duration
+                                                    .shortest,
+                                        },
+                                    ),
+                                    "&:hover": {
+                                        transform: "scale(1.01)",
+                                    },
+                                })}
                                 item
-                                md={4}
-                                lg={4}
+                                xl={6}
+                                lg={6}
+                                md={6}
+                                sm={12}
+                                xs={12}
                                 key={beer.id}
                                 data-testid={`beer-${beer.id}`}
                             >

@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 /* eslint-disable no-undef */
-// Generated using webpack-cli https://github.com/webpack/webpack-cli
 
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const ReactRefreshTypeScript = require("react-refresh-typescript");
+
 
 const isProduction = process.env.NODE_ENV == "production";
+const isDevelopment = process.env.NODE_ENV !== "production";
 
 const config = {
     entry: "./src/index.tsx",
@@ -15,6 +18,7 @@ const config = {
         publicPath: "/",
     },
     devServer: {
+        hot: true,
         historyApiFallback: true,
         open: true,
         host: "localhost",
@@ -25,13 +29,26 @@ const config = {
             template: "index.html",
         }),
         new Dotenv(),
+        isDevelopment && new ReactRefreshWebpackPlugin(),
     ],
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/i,
-                loader: "ts-loader",
-                exclude: ["/node_modules/"],
+                test: /\.[jt]sx?$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: require.resolve("ts-loader"),
+                        options: {
+                            getCustomTransformers: () => ({
+                                before: [
+                                    isDevelopment && ReactRefreshTypeScript(),
+                                ].filter(Boolean),
+                            }),
+                            transpileOnly: isDevelopment,
+                        },
+                    },
+                ],
             },
             {
                 test: /\.css$/,
@@ -59,7 +76,7 @@ const config = {
         extensions: [".tsx", ".ts", ".jsx", ".js", "..."],
         alias: {
             "@": path.resolve(__dirname, "src"),
-        }
+        },
     },
 };
 

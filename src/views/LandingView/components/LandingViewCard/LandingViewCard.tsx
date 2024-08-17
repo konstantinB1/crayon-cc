@@ -1,10 +1,9 @@
-import { Box, Card } from "@mui/material";
+import { Box, Card, CardActionArea } from "@mui/material";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import ImageRenderer from "./components/ImageRenderer";
 import TextRenderer from "./components/TextRenderer";
-import CardStatus from "./components/CardStatus";
 import { Beer } from "@/services/beer/api-beers";
 
 type LandingViewCardProps = {
@@ -22,23 +21,27 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
                 navigate(`/beer/${data.id}`);
             }}
         >
-            <Box
-                ref={rootRef}
-                data-id={data.id}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                flexDirection="column"
-                height={350}
-            >
-                <CardStatus id={data.id} />
-                <ImageRenderer ref={rootRef} image={data.image} />
-                <TextRenderer
-                    id={data.id}
-                    name={data.name}
-                    price={data.price}
-                />
-            </Box>
+            <CardActionArea disableRipple>
+                <Box
+                    ref={rootRef}
+                    data-id={data.id}
+                    display="flex"
+                    justifyContent="center"
+                    alignItems="center"
+                    flexDirection="column"
+                >
+                    <ImageRenderer
+                        id={data.id}
+                        ref={rootRef}
+                        image={data.image}
+                    />
+                    <TextRenderer
+                        id={data.id}
+                        name={data.name}
+                        price={data.price}
+                    />
+                </Box>
+            </CardActionArea>
         </Card>
     );
 }

@@ -1,4 +1,4 @@
-import { create } from "zustand";
+import { StateCreator } from "zustand";
 import { Beer } from "../services/beer/api-beers";
 import { FormState } from "@/types";
 import {
@@ -7,6 +7,7 @@ import {
     sortBeers,
     SortKey,
 } from "@/services/beer/beers-utils";
+import { CombinedStore } from "./types";
 
 export type BeerFilterStore = {
     // Beers to be displayed
@@ -18,10 +19,16 @@ export type BeerFilterStore = {
     // Form state that will be used to filter the beers
     formState: FormState;
 
+    // Apply initial values so the page loads with the correct beers
     applyInitialFilter: (beers: Beer[]) => void;
+
+    // Sort the beers by key
     sortAction: (key: SortKey) => void;
 
+    // Used by slider to set the price range
     setPriceRange: (beers: Beer[], priceRange: number[]) => void;
+
+    // Update the price range in the form state
     updatePriceRange: (priceRange: number[]) => void;
 };
 
@@ -30,7 +37,12 @@ const initialFormState: FormState = {
     sortKey: SortKey.nameAsc,
 };
 
-export const useBeerFilterStore = create<BeerFilterStore>((set, get) => ({
+export const createBeerFilterStore: StateCreator<
+    CombinedStore,
+    [],
+    [],
+    BeerFilterStore
+> = (set, get) => ({
     viewBeers: [],
     formState: initialFormState,
     setViewBeers: (beers: Beer[]) => set({ viewBeers: beers }),
@@ -69,4 +81,4 @@ export const useBeerFilterStore = create<BeerFilterStore>((set, get) => ({
         set(({ formState }) => ({
             formState: { ...formState, priceRange },
         })),
-}));
+});

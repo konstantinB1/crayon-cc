@@ -1,58 +1,28 @@
-import { Beer } from "@/services/beer/api-beers";
 import {
     getMinMaxPrice as _getMinAndMaxPrice,
     SortKey,
 } from "@/services/beer/beers-utils";
-import { useBeerFilterStore, useBeerRootStore } from "@/store";
+import useBoundStore from "@/store";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
 export default function useFilter() {
     const appliedInitial = useRef(false);
-    const { beers, fetchedInitial } = useBeerRootStore(
-        ({ beers, fetchedInitial }) => ({ beers, fetchedInitial }),
-    );
-
     const {
-        viewBeers,
+        beers,
+        fetchedInitial,
         sortAction: sortAction,
         formState,
         setViewBeers,
         applyInitialFilter,
         setPriceRange: _setPriceRange,
         updatePriceRange,
-    } = useBeerFilterStore(
-        ({
-            viewBeers,
-            setViewBeers,
-            sortAction,
-            formState,
-            updatePriceRange,
-            setPriceRange,
-            applyInitialFilter,
-        }) => ({
-            viewBeers,
-            setViewBeers,
-            updatePriceRange,
-            sortAction,
-            setPriceRange,
-            formState,
-            applyInitialFilter,
-        }),
-    );
-
-    const draft = useRef<Beer[]>([]);
+    } = useBoundStore();
 
     const getMinAndMaxPrice = useMemo(() => _getMinAndMaxPrice(beers), [beers]);
-    console.log(getMinAndMaxPrice);
-
-    if (draft.current.length === 0) {
-        draft.current = viewBeers;
-    }
 
     const clear = useCallback(() => {
-        draft.current = viewBeers;
         setViewBeers(beers);
-    }, [beers, setViewBeers, viewBeers]);
+    }, [beers, setViewBeers]);
 
     const sortBy = useCallback(
         (key: SortKey) => {

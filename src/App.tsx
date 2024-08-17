@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LandingView from "./views/LandingView/LandingView";
 import useGetBeers from "./hooks/useGetBeers";
-import { Box, Container, GlobalStyles, ThemeProvider } from "@mui/material";
+import { Container, GlobalStyles, ThemeProvider } from "@mui/material";
 import theme from "./theme";
 import ProductDetail from "./views/ProductDetail/ProductDetails";
-import StatusBar from "./views/LandingView/components/StatusBar/StatusBar";
+import StatusBar from "@/components/StatusBar";
 
 export default function App() {
     useGetBeers();

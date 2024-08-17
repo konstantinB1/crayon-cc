@@ -10,11 +10,11 @@ import {
 } from "@mui/material";
 import useFilter from "./hooks/useFilter";
 import { SortKey } from "@/services/beer/beers-utils";
-import { useBeerRootStore } from "@/store";
+import useBoundStore from "@/store";
 import { formatPrice } from "@/utils/price-utils";
 
 export default function LandingViewFilters() {
-    const { fetching } = useBeerRootStore(({ fetching }) => ({ fetching }));
+    const { fetching } = useBoundStore();
     const { clear, formState, getMinAndMaxPrice, sortBy, setPriceRange } =
         useFilter();
     const [min, max] = getMinAndMaxPrice;

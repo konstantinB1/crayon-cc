@@ -6,6 +6,7 @@ import {
     sortByNumbersAndStrings,
 } from "@/utils/order-utils";
 
+// Based on api response keys
 export enum SortKey {
     priceAsc = "price-asc",
     priceDesc = "price-desc",
@@ -51,9 +52,3 @@ export const getMinMaxPrice = (beers: Beer[]) => {
 
 export const applySort = (beers: Beer[], { sortKey, priceRange }: FormState) =>
     filterBeers(sortBeers(beers, sortKey), priceRange);
-
-export const removeSingleItemFromArr = (arr: number[], id: number) => {
-    const index = arr.indexOf(id);
-    if (index === -1) return arr;
-    return [...arr.slice(0, index), ...arr.slice(index + 1)];
-};

@@ -1,4 +1,4 @@
-import { useBeerFilterStore, useBeerRootStore, useCartStore } from "@/store";
+import useBoundStore from "@/store";
 import {
     Card,
     Box,
@@ -8,7 +8,9 @@ import {
     Badge,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { cloneElement, ReactElement } from "react";
+import { cloneElement, ReactElement, useRef, useState } from "react";
+import MenuCartPreview from "./MenuCartPreview";
+import usePersistCartBounds from "./hooks/usePersistCartBounds";
 
 function ElevationScroll({ children }: { children: ReactElement }) {
     const trigger = useScrollTrigger({
@@ -23,13 +25,11 @@ function ElevationScroll({ children }: { children: ReactElement }) {
 }
 
 export default function StatusBar() {
-    const { beers } = useBeerRootStore(({ beers }) => ({
-        beers,
-    }));
-    const { items } = useCartStore(({ items }) => ({ items }));
-    const { viewBeers } = useBeerFilterStore(({ viewBeers }) => ({
-        viewBeers,
-    }));
+    const cartRef = useRef<HTMLButtonElement>(null);
+    const [showCartPreview, setShowCartPreview] = useState(false);
+    const { beers, getTotalItems, isAddingItem, viewBeers } = useBoundStore();
+
+    usePersistCartBounds(cartRef);
 
     return (
         <ElevationScroll>
@@ -62,15 +62,24 @@ export default function StatusBar() {
                 </Box>
                 <Box display="flex" mr={1}>
                     <IconButton
+                        onClick={() => setShowCartPreview(!showCartPreview)}
+                        ref={cartRef}
                         sx={{
                             borderRadius: 0,
                         }}
                     >
-                        <Badge badgeContent={items.length} color="primary">
+                        <Badge badgeContent={getTotalItems()} color="primary">
                             <ShoppingCartIcon />
                         </Badge>
                     </IconButton>
                 </Box>
+                {showCartPreview && (
+                    <MenuCartPreview
+                        onClose={() => setShowCartPreview(false)}
+                        open={showCartPreview}
+                        ref={cartRef}
+                    />
+                )}
             </Card>
         </ElevationScroll>
     );

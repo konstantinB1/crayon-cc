@@ -1,5 +1,6 @@
-import { create } from "zustand";
+import { StateCreator } from "zustand";
 import { Beer } from "../services/beer/api-beers";
+import { CombinedStore } from "./types";
 
 export type BeerRootStore = {
     // All beers fetched from the API
@@ -22,13 +23,16 @@ export type BeerRootStore = {
     fetching: boolean;
 };
 
-export const useBeerRootStore = create<BeerRootStore>((set) => ({
+export const createBeerRootStore: StateCreator<
+    CombinedStore,
+    [],
+    [],
+    BeerRootStore
+> = (set) => ({
     beers: [],
     fetching: false,
     fetchedInitial: false,
     setAllBeers: (beers: Beer[]) => set({ beers }),
     setFetchInitial: () => set({ fetchedInitial: true }),
     setFetching: (fetching: boolean) => set({ fetching }),
-}));
-
-export const useBeerStoreProxy = () => useBeerRootStore((state) => state);
+});

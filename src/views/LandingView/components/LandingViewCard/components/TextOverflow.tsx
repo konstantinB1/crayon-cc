@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import useOverflowDetect from "./hooks/useOverflowDetect";
 
 export type TextOverflowProps = {
     text: string;
@@ -10,21 +11,8 @@ const TEXT_LINE_HEIGHT = 24;
 
 export default function TextOverflow({ text }: TextOverflowProps) {
     const titleRef = useRef<HTMLParagraphElement | null>(null);
-    const bounds = useRef<DOMRect | null>(null);
-    const [isOverflow, setIsOverflow] = useState(true);
-    const [isHover, setIsHover] = useState(false);
-
-    useEffect(() => {
-        setIsOverflow((curState) => {
-            if (curState) {
-                return true;
-            }
-
-            bounds.current = titleRef?.current?.getBoundingClientRect();
-            const elHeight = titleRef?.current.getBoundingClientRect().height;
-            return elHeight > TEXT_LINE_HEIGHT;
-        });
-    }, []);
+    const { bounds, isOverflow, isHover, setIsHover } =
+        useOverflowDetect(titleRef);
 
     return (
         <Box
@@ -48,7 +36,7 @@ export default function TextOverflow({ text }: TextOverflowProps) {
                             position: "absolute",
                             height:
                                 bounds?.current?.height + 2 * TEXT_LINE_HEIGHT,
-                            backgroundColor: "rgba(0, 0, 0, 0.2)",
+                            backgroundColor: "rgba(0, 0, 0, 0.9)",
                             zIndex: 100,
                             padding: "0 12px",
                             width: "calc(100% - 24px)",

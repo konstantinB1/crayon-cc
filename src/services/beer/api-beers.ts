@@ -1,3 +1,4 @@
+import { randomItemFromArray, randomNumber } from "@/utils/object-utils";
 import { priceToInt } from "@/utils/order-utils";
 import { formatPrice } from "@/utils/price-utils";
 
@@ -6,7 +7,7 @@ export type Beer = {
     price?: string | number;
     name?: string;
     image?: string;
-    ingredients?: string[];
+    ingredients?: [string, number][];
     priceFormated?: string;
     brewery?: string;
     description?: string;
@@ -56,28 +57,50 @@ A fleeting dance, a liquid fire,
 In beer, we find both peace and ire.
 `;
 
-const randomNumber = (max: number) => Math.floor(Math.random() * max);
-const randomItemFromArray = (arr: string[]) => arr[randomNumber(arr.length)];
+function shuffle<T>(array: T[]) {
+    let currentIndex = array.length;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+        // Pick a remaining element...
+        const randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        // And swap it with the current element.
+        [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+        ];
+    }
+}
 
 // Create ingredients that use certain perecnt of the fake ingredients
 // and always sum to 100%
 const createIngredients = () => {
-    const ingredients: string[] = [];
+    const ingredients: [string, number][] = [];
     let sum = 0;
+
+    shuffle(fakeIngredients);
+
     for (let i = 0; i < fakeIngredients.length; i++) {
         const percent = randomNumber(100 - sum);
 
+        if (sum >= 100) {
+            break;
+        }
+
         sum += percent;
-        ingredients.push(`${fakeIngredients[i]}: ${percent}%`);
+        ingredients.push([fakeIngredients[i], percent]);
     }
 
-    return ingredients;
+    return ingredients.filter(([, percent]) => percent > 0);
 };
 
-const normalizeData = (beers: Beer[]) =>
+const normalizeData = (beers: Beer[]): Beer[] =>
     beers.map((beer) => {
         beer.description = poem;
         beer.brewery = randomItemFromArray(fakeBreweries);
+        beer.ingredients = createIngredients();
 
         // If the price is a placeholder, generate a random price
         if (beer.price === "{{price}}" || beer.price === "{{&randomprice}}") {
@@ -97,7 +120,13 @@ const normalizeData = (beers: Beer[]) =>
 
 export async function getBeers(): Promise<Beer[]> {
     try {
-        const response = await fetch(process.env.API_ENDPOINT!);
+        const response = await fetch(process.env.API_ENDPOINT!, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+        });
         return normalizeData((await response.json()) as Beer[]);
     } catch (e) {
         throw new Error(`Failed to fetch beers: ${e}`);

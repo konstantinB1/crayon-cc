@@ -10,12 +10,6 @@ export const priceToInt = (price?: string | number) => {
 
     try {
         if (typeof price === "string") {
-            // API started to return {{price}} and {{&randomprice}} as a string
-            // all of a sudden, so we need to handle this case
-            if (price === "{{price}}" || price === "{{&randomprice}}") {
-                return createRandomPrice();
-            }
-
             return parseFloat(price?.replace("$", ""));
         }
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -28,15 +22,8 @@ export const priceToInt = (price?: string | number) => {
     }
 };
 
-export const getPriceRanges = <T extends { price: string | number }>(
-    list: T[],
-) => {
-    const prices = list?.map(
-        (item) =>
-            (typeof item.price === "number" ||
-                typeof item.price === "string") &&
-            priceToInt(item.price),
-    );
+export const getPriceRanges = <T extends { price: number }>(list: T[]) => {
+    const prices = list?.map((item) => item.price);
     const min = Math.min(...prices);
     const max = Math.max(...prices);
 

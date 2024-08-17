@@ -1,34 +1,16 @@
-import { useCartStore } from "@/store";
-import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
+import { Box, Divider, Typography } from "@mui/material";
 import TextOverflow from "./TextOverflow";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { useMemo, useTransition } from "react";
 import { Beer } from "@/services/beer/api-beers";
 import { formatPrice } from "@/utils/price-utils";
+import AddButton from "@/components/AddButton";
+import RemoveButton from "@/components/RemoveButton";
 
 export type TextRendererProps = Pick<Beer, "name" | "price" | "id">;
 
 export default function TextRenderer({ id, name, price }: TextRendererProps) {
-    const {
-        remove: removeFromCart,
-        add: addToCart,
-        items,
-    } = useCartStore(({ add, remove, items }) => ({
-        add,
-        remove,
-        items,
-    }));
-
-    const getItemsForProduct = useMemo(
-        () => items.filter((item) => item === id).length,
-        [id, items],
-    );
-
-    const [isPending, startTransition] = useTransition();
-
     return (
         <Box width="100%" height="100%">
-            <Box height={160}>
+            <Box>
                 <TextOverflow text={name} />
                 <Divider sx={{ mt: 2 }} />
                 <Box
@@ -44,33 +26,9 @@ export default function TextRenderer({ id, name, price }: TextRendererProps) {
                     <Typography variant="h5" color="primary" fontWeight={500}>
                         {formatPrice(price)}
                     </Typography>
-                    <Box display="flex">
-                        {getItemsForProduct ? (
-                            <Button
-                                size="small"
-                                color="error"
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    removeFromCart(id);
-                                }}
-                            >
-                                Remove ({getItemsForProduct})
-                            </Button>
-                        ) : null}
-                        <IconButton
-                            size="medium"
-                            color="primary"
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                startTransition(() => {
-                                    if (!isPending) {
-                                        addToCart(id);
-                                    }
-                                });
-                            }}
-                        >
-                            <AddCircleIcon fontSize="medium" />
-                        </IconButton>
+                    <Box display="flex" gap={1}>
+                        <RemoveButton id={id} />
+                        <AddButton id={id} quantity={1} />
                     </Box>
                 </Box>
             </Box>

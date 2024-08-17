@@ -1,24 +1,32 @@
 import { Box, CardMedia, Skeleton } from "@mui/material";
-import { forwardRef, RefObject } from "react";
+import { forwardRef, RefObject, useRef } from "react";
 import useImageLoader from "./hooks/useImageLoader";
 
 export type ImageRendererProps = {
+    id: number;
     image: string;
 };
 
 const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
-    ({ image }, ref: RefObject<HTMLDivElement>) => {
+    ({ id, image }, ref: RefObject<HTMLDivElement>) => {
+        const imgRef = useRef<HTMLImageElement | null>(null);
         const { exists, loading } = useImageLoader(ref, image);
-
         return (
             <Box
-                width={180}
-                height={180}
+                position="relative"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 margin="auto"
                 my={4}
+                sx={{
+                    width: {
+                        lg: 180,
+                    },
+                    height: {
+                        lg: 180,
+                    },
+                }}
             >
                 {loading && (
                     <Skeleton
@@ -33,11 +41,16 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
                 )}
                 {!loading && (
                     <CardMedia
+                        ref={imgRef}
                         component="img"
                         image={exists ? image : process.env.PLACEHOLDER_IMG_URL}
-                        width="100%"
-                        height="100%"
                         sx={{
+                            width: {
+                                xl: 180,
+                            },
+                            height: {
+                                xl: 180,
+                            },
                             objectFit: "contain",
                         }}
                     />

@@ -1,19 +1,14 @@
 import useGetImage from "@/hooks/useGetImage";
-import { useBeerRootStore } from "@/store";
-import { Box, Button, Card, Divider, Grid, Typography } from "@mui/material";
+import useBoundStore from "@/store";
+import { Box, Card, Divider, Grid, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import AddIcon from "@mui/icons-material/Add";
+import ProductDetailsActions from "./components/ProductDetailsActions";
+import IngredientsContainer from "./components/IngredientsContainer";
 
 export default function ProductDetail() {
     const { id } = useParams<{ id: string }>();
-    const { beers, fetchedInitial, fetching } = useBeerRootStore(
-        ({ fetching, fetchedInitial, beers }) => ({
-            beers,
-            fetchedInitial,
-            fetching,
-        }),
-    );
+    const { beers } = useBoundStore();
 
     const currentBeer = useMemo(
         () => beers.find((beer) => beer.id === Number(id)),
@@ -23,23 +18,39 @@ export default function ProductDetail() {
     const image = useGetImage(currentBeer?.image);
 
     return (
-        <Grid container>
-            <Grid item lg={3}></Grid>
-            <Grid item lg={9}>
+        <Grid container spacing={4}>
+            <Grid item lg={3} sm={12} xs={12}>
+                <IngredientsContainer ingredients={currentBeer?.ingredients} />
+            </Grid>
+            <Grid item lg={9} sm={12} xs={12}>
                 <Card variant="outlined">
                     <Box
                         sx={{
                             height: "100%",
                         }}
                     >
-                        <Box display="flex" gap={4} height="100%" p={2}>
-                            <Box height="100%">
+                        <Grid container p={2} spacing={2}>
+                            <Grid item lg={5} sm={12} xs={12} height="100%">
                                 <Box
                                     sx={(theme) => ({
                                         border: "1px solid",
                                         borderColor: theme.palette.grey[900],
-                                        height: 300,
-                                        width: 300,
+                                        width: {
+                                            xl: 300,
+                                            lg: 300,
+                                            md: 300,
+                                            sm: 300,
+                                            xs: "auto",
+                                        },
+                                        height: {
+                                            xl: 300,
+                                            lg: 300,
+                                            md: 300,
+                                            sm: 300,
+                                            xs: "auto",
+                                        },
+                                        margin: "auto",
+                                        p: 2,
                                     })}
                                 >
                                     <Box
@@ -47,10 +58,16 @@ export default function ProductDetail() {
                                         height="100%"
                                         component="img"
                                         src={image}
+                                        sx={{
+                                            objectFit: "contain",
+                                        }}
                                     />
                                 </Box>
-                            </Box>
-                            <Box
+                            </Grid>
+                            <Grid
+                                sm={12}
+                                lg={7}
+                                item
                                 display="flex"
                                 flexDirection="column"
                                 justifyContent="space-between"
@@ -58,8 +75,8 @@ export default function ProductDetail() {
                                 <Typography
                                     variant="body2"
                                     sx={{
-                                        wordBreak: "break-word",
-                                        wordWrap: "break-word",
+                                        wordSpacing: 0.5,
+                                        lineHeight: 1.6,
                                     }}
                                 >
                                     {currentBeer?.description}
@@ -69,8 +86,8 @@ export default function ProductDetail() {
                                         {currentBeer?.priceFormated}
                                     </Typography>
                                 </Box>
-                            </Box>
-                        </Box>
+                            </Grid>
+                        </Grid>
                         <Divider sx={{ m: 0 }} />
                         <Box
                             p={4}
@@ -80,7 +97,7 @@ export default function ProductDetail() {
                                 backgroundColor: theme.palette.grey[900],
                             })}
                         >
-                            <Box>
+                            <Box maxWidth={400}>
                                 <Typography variant="h5">
                                     {currentBeer?.name}
                                 </Typography>
@@ -91,9 +108,7 @@ export default function ProductDetail() {
                                     {currentBeer?.brewery}
                                 </Typography>
                             </Box>
-                            <Button variant="outlined" startIcon={<AddIcon />}>
-                                Add to cart
-                            </Button>
+                            <ProductDetailsActions id={currentBeer?.id} />
                         </Box>
                     </Box>
                 </Card>
