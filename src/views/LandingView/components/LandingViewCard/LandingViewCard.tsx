@@ -29,25 +29,14 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
                 navigate(`/beer/${data.id}`);
             }}
         >
-            <CardActionArea
-                disableRipple
-                sx={{
-                    height: "100%",
-                }}
-            >
-                <Box ref={rootRef} data-id={data.id}>
-                    <ImageRenderer
-                        id={data.id}
-                        ref={rootRef}
-                        image={data.image}
-                    />
-                    <TextRenderer
-                        id={data.id}
-                        name={data.name}
-                        price={data.price}
-                    />
-                </Box>
-            </CardActionArea>
+            <Box ref={rootRef} data-id={data.id}>
+                <ImageRenderer id={data.id} ref={rootRef} image={data.image} />
+                <TextRenderer
+                    id={data.id}
+                    name={data.name}
+                    price={data.price}
+                />
+            </Box>
         </Card>
     );
 }

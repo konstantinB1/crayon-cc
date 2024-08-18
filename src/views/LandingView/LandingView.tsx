@@ -1,28 +1,21 @@
 import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
-import useBoundStore from "@/store";
 import LandingViewCard from "./components/LandingViewCard";
-
-import { useRef } from "react";
 import LandingViewFilters from "./components/LandingViewFilters";
-import { placeholderBeers } from "./LandingView.utils";
-import { useShallow } from "zustand/react/shallow";
+import useLandingViewData from "./hooks/useLandingViewData";
 
 export default function LandingView() {
-    const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
-    const viewBeers = useBoundStore(useShallow((state) => state.viewBeers));
-    const rootRef = useRef<HTMLDivElement | null>(null);
-    const beers = fetchedInitial ? viewBeers : placeholderBeers;
+    const { beers, rootRef, fetchedInitial } = useLandingViewData();
 
     return (
         <Stack>
-            <Grid container spacing={4}>
+            <Grid container spacing={4} columns={20}>
                 <Grid
                     item
-                    md={3}
-                    lg={3}
-                    sm={12}
-                    xs={12}
-                    xl={3}
+                    xl={6}
+                    lg={6}
+                    md={6}
+                    sm={20}
+                    xs={20}
                     position="sticky"
                     zIndex={1000}
                     sx={{
@@ -39,10 +32,16 @@ export default function LandingView() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item md={9} lg={9}>
+                <Grid item xl={14} md={14} lg={14}>
                     <Grid container spacing={4} ref={rootRef}>
                         {fetchedInitial && beers.length === 0 && (
-                            <Grid item md={12} lg={12} sm={12}>
+                            <Grid
+                                data-testid="no-data"
+                                item
+                                md={12}
+                                lg={12}
+                                sm={12}
+                            >
                                 <Typography variant="h5">
                                     No beers found
                                 </Typography>
@@ -70,7 +69,7 @@ export default function LandingView() {
                                 sm={12}
                                 xs={12}
                                 key={beer.id}
-                                data-testid={`beer-${beer.id}`}
+                                data-testid={`beer-card-${beer.id}`}
                             >
                                 <LandingViewCard data={beer} />
                             </Grid>

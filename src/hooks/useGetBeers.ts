@@ -14,6 +14,8 @@ export default function useGetBeers() {
     const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
     const setStatus = useBoundStore((state) => state.setAppStatus);
 
+    console.log("here");
+
     useEffect(() => {
         if (fetchedInitial) {
             return;
@@ -52,5 +54,5 @@ export default function useGetBeers() {
                 clearInterval(interval.current);
             }
         };
-    }, [fetchedInitial, setAllBeers, setFetchInitial, setFetching]);
+    }, [fetchedInitial, setAllBeers, setFetchInitial, setFetching, setStatus]);
 }
