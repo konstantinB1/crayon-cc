@@ -2,6 +2,17 @@ import { StateCreator } from "zustand";
 import { Beer } from "../services/beer/api-beers";
 import { CombinedStore } from "./types";
 
+export enum AppStatus {
+    unknown = "unknown",
+    online = "online",
+    offline = "offline",
+    onlineWithLoadedData = "onlineWithLoadedData",
+    offlineWithLoadedData = "offlineWithLoadedData",
+    offlineWithNoData = "offlineWithNoData",
+    onlineWithNoData = "onlineWithNoData",
+    apiError = "apiError",
+}
+
 export type BeerRootStore = {
     // All beers fetched from the API
     beers: Beer[];
@@ -21,6 +32,13 @@ export type BeerRootStore = {
 
     // Currently fetching the API
     fetching: boolean;
+
+    appStatus: AppStatus;
+    lang: string;
+
+    setAppStatus: (status: AppStatus) => void;
+
+    setLang: (lang: string) => void;
 };
 
 export const createBeerRootStore: StateCreator<
@@ -30,9 +48,14 @@ export const createBeerRootStore: StateCreator<
     BeerRootStore
 > = (set) => ({
     beers: [],
-    fetching: false,
+    lang: "en",
+    fetching: true,
     fetchedInitial: false,
+    appStatus: AppStatus.unknown,
+
     setAllBeers: (beers: Beer[]) => set({ beers }),
     setFetchInitial: () => set({ fetchedInitial: true }),
     setFetching: (fetching: boolean) => set({ fetching }),
+    setAppStatus: (appStatus: AppStatus) => set({ appStatus }),
+    setLang: (lang: string) => set({ lang }),
 });

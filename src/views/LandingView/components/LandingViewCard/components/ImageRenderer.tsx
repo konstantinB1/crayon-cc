@@ -8,9 +8,10 @@ export type ImageRendererProps = {
 };
 
 const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
-    ({ id, image }, ref: RefObject<HTMLDivElement>) => {
+    ({ image }, ref: RefObject<HTMLDivElement>) => {
         const imgRef = useRef<HTMLImageElement | null>(null);
         const { exists, loading } = useImageLoader(ref, image);
+        const img = exists ? image : process.env.PLACEHOLDER_IMG_URL;
 
         return (
             <Box
@@ -44,13 +45,28 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
                     <CardMedia
                         ref={imgRef}
                         component="img"
-                        image={exists ? image : process.env.PLACEHOLDER_IMG_URL}
+                        image={img}
                         sx={{
+                            mb: {
+                                xl: 0,
+                                lg: 0,
+                                md: 0,
+                                sm: 0,
+                                xs: 4,
+                            },
                             width: {
                                 xl: 180,
+                                lg: 180,
+                                md: 180,
+                                sm: 220,
+                                xs: "50%",
                             },
                             height: {
                                 xl: 180,
+                                lg: 180,
+                                md: 180,
+                                sm: 220,
+                                xs: "50%",
                             },
                             objectFit: "contain",
                         }}

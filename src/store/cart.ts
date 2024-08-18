@@ -30,10 +30,6 @@ export type CartState = {
 
     // Get total price of all items in the cart
     getTotalPrice: () => string;
-
-    isAddingItem: number | null;
-
-    isAddingCurrentItem: (id: number) => boolean;
 };
 
 export const createCartStore: StateCreator<CombinedStore, [], [], CartState> = (
@@ -99,8 +95,4 @@ export const createCartStore: StateCreator<CombinedStore, [], [], CartState> = (
                 };
             })
             .filter((item) => item.quantity > 0),
-
-    isAddingItem: null,
-
-    isAddingCurrentItem: (id) => get().isAddingItem === id,
 });

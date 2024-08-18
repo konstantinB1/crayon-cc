@@ -1,18 +1,10 @@
 import useBoundStore from "@/store";
-import {
-    Card,
-    Box,
-    IconButton,
-    useScrollTrigger,
-    Badge,
-    Link,
-} from "@mui/material";
+import { Card, Box, IconButton, useScrollTrigger, Badge } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { cloneElement, ReactElement, useRef, useState } from "react";
+import { cloneElement, ReactElement, useEffect, useRef, useState } from "react";
 import MenuCartPreview from "./MenuCartPreview";
-import usePersistCartBounds from "./hooks/usePersistCartBounds";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
 import NavButton from "./components/NavButton";
+import { motion, useAnimation } from "framer-motion";
 
 function ElevationScroll({ children }: { children: ReactElement }) {
     const trigger = useScrollTrigger({
@@ -29,10 +21,31 @@ function ElevationScroll({ children }: { children: ReactElement }) {
 export default function StatusBar() {
     const cartRef = useRef<HTMLButtonElement>(null);
     const [showCartPreview, setShowCartPreview] = useState(false);
-    const { getTotalItems } = useBoundStore();
-    const navigate = useNavigate();
+    const getTotalItems = useBoundStore((state) => state.getTotalItems());
+    const prevItems = useRef<number | null>();
+    const cartControls = useAnimation();
+    const numberControls = useAnimation();
 
-    usePersistCartBounds(cartRef);
+    useEffect(() => {
+        if (getTotalItems > prevItems.current && prevItems.current !== null) {
+            cartControls.start({
+                scale: [1, 1.1, 1],
+                transition: {
+                    duration: 0.5,
+                    ease: "circOut",
+                },
+            });
+            numberControls.start({
+                scale: [1, 1.1, 1],
+                transition: {
+                    duration: 0.5,
+                    ease: "circOut",
+                },
+            });
+        }
+
+        prevItems.current = getTotalItems;
+    }, [cartControls, getTotalItems, numberControls]);
 
     return (
         <ElevationScroll>
@@ -57,7 +70,13 @@ export default function StatusBar() {
                         Product Management
                     </NavButton>
                 </Box>
-                <Box display="flex" mr={1}>
+                <motion.div
+                    animate={cartControls}
+                    style={{
+                        display: "flex",
+                        marginRight: 10,
+                    }}
+                >
                     <IconButton
                         onClick={() => setShowCartPreview(!showCartPreview)}
                         ref={cartRef}
@@ -65,11 +84,20 @@ export default function StatusBar() {
                             borderRadius: 0,
                         }}
                     >
-                        <Badge badgeContent={getTotalItems()} color="primary">
+                        <Badge
+                            badgeContent={
+                                getTotalItems && (
+                                    <motion.span animate={numberControls}>
+                                        {getTotalItems}
+                                    </motion.span>
+                                )
+                            }
+                            color="primary"
+                        >
                             <ShoppingCartIcon />
                         </Badge>
                     </IconButton>
-                </Box>
+                </motion.div>
                 {showCartPreview && (
                     <MenuCartPreview
                         onClose={() => setShowCartPreview(false)}

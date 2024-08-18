@@ -18,7 +18,19 @@ export default function ProductDetail() {
     const image = useGetImage(currentBeer?.image);
 
     return (
-        <Grid container spacing={4}>
+        <Grid
+            container
+            spacing={4}
+            display="flex"
+            sx={{
+                flexDirection: {
+                    lg: "row",
+                    md: "column-reverse",
+                    sm: "column-reverse",
+                    xs: "column-reverse",
+                },
+            }}
+        >
             <Grid item lg={3} sm={12} xs={12}>
                 <IngredientsContainer ingredients={currentBeer?.ingredients} />
             </Grid>
@@ -40,7 +52,7 @@ export default function ProductDetail() {
                                             lg: 300,
                                             md: 300,
                                             sm: 300,
-                                            xs: "auto",
+                                            xs: "50%",
                                         },
                                         height: {
                                             xl: 300,
@@ -69,8 +81,15 @@ export default function ProductDetail() {
                                 lg={7}
                                 item
                                 display="flex"
-                                flexDirection="column"
                                 justifyContent="space-between"
+                                sx={{
+                                    flexDirection: {
+                                        lg: "column",
+                                        md: "column-reverse",
+                                        sm: "column-reverse",
+                                        xs: "column-reverse",
+                                    },
+                                }}
                             >
                                 <Typography
                                     variant="body2"
@@ -82,7 +101,19 @@ export default function ProductDetail() {
                                     {currentBeer?.description}
                                 </Typography>
                                 <Box height="auto">
-                                    <Typography variant="h4" color="primary">
+                                    <Typography
+                                        variant="h4"
+                                        color="primary"
+                                        sx={{
+                                            mb: {
+                                                xl: 0,
+                                                lg: 0,
+                                                md: 1,
+                                                sm: 1,
+                                                xs: 1,
+                                            },
+                                        }}
+                                    >
                                         {currentBeer?.priceFormated}
                                     </Typography>
                                 </Box>
@@ -91,13 +122,37 @@ export default function ProductDetail() {
                         <Divider sx={{ m: 0 }} />
                         <Box
                             p={4}
-                            display="flex"
                             justifyContent="space-between"
                             sx={(theme) => ({
+                                display: {
+                                    xl: "flex",
+                                    lg: "flex",
+                                    md: "flex",
+                                    sm: "flex",
+                                    xs: "block",
+                                },
+                                p: {
+                                    xl: 4,
+                                    lg: 4,
+                                    md: 4,
+                                    sm: 4,
+                                    xs: 2,
+                                },
                                 backgroundColor: theme.palette.grey[900],
                             })}
                         >
-                            <Box maxWidth={400}>
+                            <Box
+                                maxWidth={400}
+                                sx={{
+                                    mb: {
+                                        xl: 0,
+                                        lg: 0,
+                                        md: 0,
+                                        sm: 0,
+                                        xs: 4,
+                                    },
+                                }}
+                            >
                                 <Typography variant="h5">
                                     {currentBeer?.name}
                                 </Typography>

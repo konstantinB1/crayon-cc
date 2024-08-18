@@ -57,16 +57,15 @@ A fleeting dance, a liquid fire,
 In beer, we find both peace and ire.
 `;
 
+// Mutate the array, we don't care
+// about preserving it
 function shuffle<T>(array: T[]) {
     let currentIndex = array.length;
 
-    // While there remain elements to shuffle...
     while (currentIndex != 0) {
-        // Pick a remaining element...
         const randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex--;
 
-        // And swap it with the current element.
         [array[currentIndex], array[randomIndex]] = [
             array[randomIndex],
             array[currentIndex],
@@ -119,16 +118,13 @@ const normalizeData = (beers: Beer[]): Beer[] =>
     });
 
 export async function getBeers(): Promise<Beer[]> {
-    try {
-        const response = await fetch(process.env.API_ENDPOINT!, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-            },
-        });
-        return normalizeData((await response.json()) as Beer[]);
-    } catch (e) {
-        throw new Error(`Failed to fetch beers: ${e}`);
-    }
+    const response = await fetch(process.env.API_ENDPOINT!, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+    });
+
+    return normalizeData((await response.json()) as Beer[]);
 }

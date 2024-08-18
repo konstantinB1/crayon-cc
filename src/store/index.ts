@@ -1,14 +1,13 @@
 import { create } from "zustand";
-import { CartState, createCartStore } from "./cart";
-import { BeerFilterStore, createBeerFilterStore } from "./filter";
-import { BeerRootStore, createBeerRootStore } from "./root";
+import { createCartStore } from "./cart";
+import { createBeerFilterStore } from "./filter";
+import { createBeerRootStore } from "./root";
+import { CombinedStore } from "./types";
 
-const useBoundStore = create<CartState & BeerFilterStore & BeerRootStore>()(
-    (...a) => ({
-        ...createCartStore(...a),
-        ...createBeerFilterStore(...a),
-        ...createBeerRootStore(...a),
-    }),
-);
+const useBoundStore = create<CombinedStore>()((...a) => ({
+    ...createCartStore(...a),
+    ...createBeerFilterStore(...a),
+    ...createBeerRootStore(...a),
+}));
 
 export default useBoundStore;

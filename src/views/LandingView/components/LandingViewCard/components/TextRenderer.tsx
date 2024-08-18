@@ -1,5 +1,4 @@
 import { Box, Divider, Typography } from "@mui/material";
-import TextOverflow from "./TextOverflow";
 import { Beer } from "@/services/beer/api-beers";
 import { formatPrice } from "@/utils/price-utils";
 import AddButton from "@/components/AddButton";
@@ -9,9 +8,18 @@ export type TextRendererProps = Pick<Beer, "name" | "price" | "id">;
 
 export default function TextRenderer({ id, name, price }: TextRendererProps) {
     return (
-        <Box width="100%" height="100%">
+        <Box width="100%">
             <Box>
-                <TextOverflow text={name} />
+                <Box
+                    position="relative"
+                    display="flex"
+                    alignItems="flex-end"
+                    height={65}
+                >
+                    <Typography px={2} variant="h5">
+                        {name}
+                    </Typography>
+                </Box>
                 <Divider sx={{ mt: 2 }} />
                 <Box
                     display="flex"

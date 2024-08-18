@@ -16,7 +16,8 @@ const MenuCartPreview = forwardRef<
     HTMLButtonElement,
     { open: boolean; onClose: () => void }
 >(({ open, onClose }, ref: RefObject<HTMLButtonElement>) => {
-    const { getCartItems, getTotalPrice } = useBoundStore();
+    const getCartItems = useBoundStore((state) => state.getCartItems);
+    const getTotalPrice = useBoundStore((state) => state.getTotalPrice);
 
     const cartItems = getCartItems();
     const hasItems = cartItems.length > 0;

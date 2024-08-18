@@ -9,7 +9,7 @@ export type AddButtonProps = {
 };
 
 export default function AddButton({ id, quantity, onAdd }: AddButtonProps) {
-    const { add: addToCart } = useBoundStore();
+    const addToCart = useBoundStore((state) => state.add);
 
     return (
         <IconButton
@@ -17,8 +17,8 @@ export default function AddButton({ id, quantity, onAdd }: AddButtonProps) {
             size="small"
             onClick={(e) => {
                 e.stopPropagation();
-                addToCart(id, quantity);
                 onAdd?.();
+                addToCart(id, quantity);
             }}
             sx={{
                 borderRadius: 1,

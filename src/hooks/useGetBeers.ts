@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { getBeers } from "../services/beer/api-beers";
 import useBoundStore from "@/store";
+import { AppStatus } from "@/store/root";
 
 const POOLING_INTERVAL = 3000;
 
@@ -11,6 +12,7 @@ export default function useGetBeers() {
     const setAllBeers = useBoundStore((state) => state.setAllBeers);
     const setFetchInitial = useBoundStore((state) => state.setFetchInitial);
     const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
+    const setStatus = useBoundStore((state) => state.setAppStatus);
 
     useEffect(() => {
         if (fetchedInitial) {
@@ -27,9 +29,15 @@ export default function useGetBeers() {
 
                 setFetchInitial();
                 setAllBeers(beers);
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            } catch (e) {
-                // Ignore
+                setStatus(AppStatus.onlineWithLoadedData);
+            } catch (err) {
+                const e = err as Error;
+
+                if (e.message === "Failed to fetch") {
+                    setStatus(AppStatus.offline);
+                } else {
+                    setStatus(AppStatus.apiError);
+                }
             } finally {
                 setFetching(false);
             }

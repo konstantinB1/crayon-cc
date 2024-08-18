@@ -16,20 +16,26 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
 
     return (
         <Card
+            sx={{
+                height: {
+                    xl: 395,
+                    lg: 395,
+                    md: 395,
+                    sm: "auto",
+                },
+            }}
             variant="outlined"
             onClick={() => {
                 navigate(`/beer/${data.id}`);
             }}
         >
-            <CardActionArea disableRipple>
-                <Box
-                    ref={rootRef}
-                    data-id={data.id}
-                    display="flex"
-                    justifyContent="center"
-                    alignItems="center"
-                    flexDirection="column"
-                >
+            <CardActionArea
+                disableRipple
+                sx={{
+                    height: "100%",
+                }}
+            >
+                <Box ref={rootRef} data-id={data.id}>
                     <ImageRenderer
                         id={data.id}
                         ref={rootRef}

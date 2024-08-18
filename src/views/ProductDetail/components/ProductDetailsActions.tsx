@@ -30,7 +30,13 @@ export default function ProductDetailsActions({ id = 0 }: { id: number }) {
                     },
                 }}
                 sx={{
-                    width: 70,
+                    width: {
+                        xl: 70,
+                        lg: 70,
+                        md: 70,
+                        sm: 100,
+                        xs: 100,
+                    },
                     p: 0.1,
                 }}
                 value={quantity}
