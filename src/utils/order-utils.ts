@@ -66,16 +66,12 @@ export const sortByNumbersAndStrings = <T>(a: T, b: T, value: OrderBy) => {
 
 export const sortObject = <T>(
     arr: T[],
-    key: keyof T,
+    key: string,
     order: OrderBy,
     comparator: <K>(a: K, b: K, value: OrderBy) => number,
 ) =>
     arr
         .slice()
         .sort((a, b) =>
-            comparator(
-                getByPath(a, key as string),
-                getByPath(b, key as string),
-                order,
-            ),
+            comparator(getByPath(a, key), getByPath(b, key), order),
         );

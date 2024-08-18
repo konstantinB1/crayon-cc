@@ -6,8 +6,11 @@ const POOLING_INTERVAL = 3000;
 
 export default function useGetBeers() {
     const interval = useRef(null);
-    const { setAllBeers, setFetching, setFetchInitial, fetchedInitial } =
-        useBoundStore();
+
+    const setFetching = useBoundStore((state) => state.setFetching);
+    const setAllBeers = useBoundStore((state) => state.setAllBeers);
+    const setFetchInitial = useBoundStore((state) => state.setFetchInitial);
+    const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
 
     useEffect(() => {
         if (fetchedInitial) {

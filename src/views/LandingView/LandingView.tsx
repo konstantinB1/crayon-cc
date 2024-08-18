@@ -5,10 +5,11 @@ import LandingViewCard from "./components/LandingViewCard";
 import { useRef } from "react";
 import LandingViewFilters from "./components/LandingViewFilters";
 import { placeholderBeers } from "./LandingView.utils";
+import { useShallow } from "zustand/react/shallow";
 
 export default function LandingView() {
-    const { fetchedInitial, viewBeers } = useBoundStore();
-
+    const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
+    const viewBeers = useBoundStore(useShallow((state) => state.viewBeers));
     const rootRef = useRef<HTMLDivElement | null>(null);
     const beers = fetchedInitial ? viewBeers : placeholderBeers;
 

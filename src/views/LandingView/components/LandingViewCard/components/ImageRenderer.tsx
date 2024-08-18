@@ -11,6 +11,7 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
     ({ id, image }, ref: RefObject<HTMLDivElement>) => {
         const imgRef = useRef<HTMLImageElement | null>(null);
         const { exists, loading } = useImageLoader(ref, image);
+
         return (
             <Box
                 position="relative"

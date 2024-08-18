@@ -2,15 +2,17 @@ import useBoundStore from "@/store";
 import {
     Card,
     Box,
-    Typography,
     IconButton,
     useScrollTrigger,
     Badge,
+    Link,
 } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { cloneElement, ReactElement, useRef, useState } from "react";
 import MenuCartPreview from "./MenuCartPreview";
 import usePersistCartBounds from "./hooks/usePersistCartBounds";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import NavButton from "./components/NavButton";
 
 function ElevationScroll({ children }: { children: ReactElement }) {
     const trigger = useScrollTrigger({
@@ -27,7 +29,8 @@ function ElevationScroll({ children }: { children: ReactElement }) {
 export default function StatusBar() {
     const cartRef = useRef<HTMLButtonElement>(null);
     const [showCartPreview, setShowCartPreview] = useState(false);
-    const { beers, getTotalItems, isAddingItem, viewBeers } = useBoundStore();
+    const { getTotalItems } = useBoundStore();
+    const navigate = useNavigate();
 
     usePersistCartBounds(cartRef);
 
@@ -48,17 +51,11 @@ export default function StatusBar() {
                 }}
                 elevation={1}
             >
-                <Box flex={3}>
-                    <Typography variant="body2">
-                        Showing&nbsp;
-                        <Typography variant="caption" color="primary">
-                            {viewBeers.length}
-                        </Typography>
-                        &nbsp;of&nbsp;
-                        <Typography variant="caption">
-                            {beers.length}
-                        </Typography>
-                    </Typography>
+                <Box flex={3} display="flex" gap={1} component="nav">
+                    <NavButton to="/">Beers</NavButton>
+                    <NavButton to="/product-management">
+                        Product Management
+                    </NavButton>
                 </Box>
                 <Box display="flex" mr={1}>
                     <IconButton

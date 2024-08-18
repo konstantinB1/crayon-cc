@@ -7,16 +7,17 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 
 export default function useFilter() {
     const appliedInitial = useRef(false);
-    const {
-        beers,
-        fetchedInitial,
-        sortAction: sortAction,
-        formState,
-        setViewBeers,
-        applyInitialFilter,
-        setPriceRange: _setPriceRange,
-        updatePriceRange,
-    } = useBoundStore();
+
+    const beers = useBoundStore((state) => state.beers);
+    const setViewBeers = useBoundStore((state) => state.setViewBeers);
+    const applyInitialFilter = useBoundStore(
+        (state) => state.applyInitialFilter,
+    );
+    const sortAction = useBoundStore((state) => state.sortAction);
+    const updatePriceRange = useBoundStore((state) => state.updatePriceRange);
+    const formState = useBoundStore((state) => state.formState);
+    const _setPriceRange = useBoundStore((state) => state.setPriceRange);
+    const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
 
     const getMinAndMaxPrice = useMemo(() => _getMinAndMaxPrice(beers), [beers]);
 
