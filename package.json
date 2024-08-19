@@ -3,12 +3,13 @@
     "version": "1.0.0",
     "description": "My webpack project",
     "scripts": {
-        "test": "npx jest --silent",
         "build": "webpack --mode=production --node-env=production",
         "lint": "npx eslint .",
         "build:dev": "webpack --mode=development",
         "build:prod": "webpack --mode=production --node-env=production",
         "watch": "webpack --watch",
+        "test": "npx jest --silent",
+        "test:cov": "npx jest --silent --coverage",
         "serve": "webpack serve"
     },
     "author": "",
