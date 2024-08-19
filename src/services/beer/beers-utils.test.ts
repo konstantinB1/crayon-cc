@@ -25,21 +25,21 @@ describe("beers-utils", () => {
             },
             {
                 input: [
-                    { price: "11" },
+                    { price: 11 },
                     { price: 12 },
                     {
-                        price: "$11.99",
+                        price: 11.99,
                     },
-                    { price: "500" },
-                    { price: "$999" },
+                    { price: 500 },
+                    { price: 999 },
                 ],
                 key: SortKey.priceDesc,
                 expected: [
-                    { price: 11 },
-                    { price: 11.99 },
-                    { price: 12 },
-                    { price: 500 },
                     { price: 999 },
+                    { price: 500 },
+                    { price: 12 },
+                    { price: 11.99 },
+                    { price: 11 },
                 ],
             },
         ])(
