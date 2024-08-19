@@ -12,7 +12,8 @@ const useImageLoaderMock = useImageLoader as jest.Mock;
 const placeholderEnv = process.env.PLACEHOLDER_IMG_URL;
 
 describe("ImageRenderer", () => {
-    const render = () => renderWithThemeProvider(<ImageRenderer image="123" />);
+    const render = () =>
+        renderWithThemeProvider(<ImageRenderer name="some name" image="123" />);
 
     afterAll(() => {
         process.env.PLACEHOLDER_IMG_URL = placeholderEnv;
