@@ -2,14 +2,14 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import StatsTable from "./components/StatsTable";
+import StatsTable from "./components/BeerTable/BeerTable";
 import Graphs from "./components/Graphs";
 import { useState } from "react";
 import { Card } from "@mui/material";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-    console.log(value, index);
+
     return (
         <Box
             width="100%"

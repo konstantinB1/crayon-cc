@@ -13,6 +13,5 @@ export default function useLandingViewData() {
         beers,
         rootRef,
         fetchedInitial,
-        viewBeers,
     };
 }

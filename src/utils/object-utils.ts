@@ -5,6 +5,19 @@ export const getByPath = <T extends { [key: string]: any }>(
     path: string,
 ) => path.split(".").reduce<T>((acc, key) => acc[key], obj as T);
 
+export const omit = <T extends Record<string, unknown>, K extends keyof T>(
+    obj: T,
+    keys: K[],
+) => {
+    const copy = { ...obj };
+
+    keys.forEach((key) => {
+        delete copy[key];
+    });
+
+    return copy;
+};
+
 export const randomNumber = (max: number) => Math.floor(Math.random() * max);
 
 export const randomItemFromArray = (arr: string[]) =>

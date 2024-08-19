@@ -23,6 +23,9 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
                     md: 395,
                     sm: "auto",
                 },
+                "&:hover": {
+                    borderColor: (theme) => theme.palette.grey[800],
+                },
             }}
             variant="outlined"
             onClick={() => {

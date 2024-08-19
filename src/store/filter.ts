@@ -30,6 +30,12 @@ export type BeerFilterStore = {
 
     // Update the price range in the form state
     updatePriceRange: (priceRange: number[]) => void;
+
+    // Serarch the beers by name
+    searchAction: (name: string) => void;
+
+    // Apply the current filter
+    applyCurrentFilter: () => void;
 };
 
 const initialFormState: FormState = {
@@ -80,5 +86,20 @@ export const createBeerFilterStore: StateCreator<
     updatePriceRange: (priceRange) =>
         set(({ formState }) => ({
             formState: { ...formState, priceRange },
+        })),
+
+    searchAction: (name) =>
+        set({
+            viewBeers:
+                name === ""
+                    ? get().beers
+                    : get().beers.filter((beer) =>
+                          beer.name.toLowerCase().includes(name.toLowerCase()),
+                      ),
+        }),
+
+    applyCurrentFilter: () =>
+        set(() => ({
+            viewBeers: applySort(get().viewBeers, get().formState),
         })),
 });

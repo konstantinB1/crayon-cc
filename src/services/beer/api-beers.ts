@@ -3,7 +3,7 @@ import { priceToInt } from "@/utils/order-utils";
 import { formatPrice } from "@/utils/price-utils";
 
 export type Beer = {
-    placeholder: boolean;
+    placeholder?: boolean;
     price?: string | number;
     name?: string;
     image?: string;

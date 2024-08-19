@@ -1,10 +1,21 @@
 import useBoundStore from "@/store";
-import { Card, Box, IconButton, useScrollTrigger, Badge } from "@mui/material";
+import {
+    Box,
+    IconButton,
+    useScrollTrigger,
+    Badge,
+    AppBar,
+    Toolbar,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { cloneElement, ReactElement, useEffect, useRef, useState } from "react";
 import MenuCartPreview from "./components/MenuCartPreview";
 import NavButton from "./components/NavButton";
 import { motion, useAnimation } from "framer-motion";
+import TuneIcon from "@mui/icons-material/Tune";
+import useShowFilter from "./hooks/useShowFilter";
+import ViewFilter from "./components/ViewFilter";
 
 function ElevationScroll({ children }: { children: ReactElement }) {
     const trigger = useScrollTrigger({
@@ -20,6 +31,7 @@ function ElevationScroll({ children }: { children: ReactElement }) {
 
 export default function StatusBar() {
     const [showCartPreview, setShowCartPreview] = useState(false);
+    const { showFilter, showFilterIcon, setShowFilter } = useShowFilter();
 
     const getTotalItems = useBoundStore((state) => state.getTotalItems());
 
@@ -51,64 +63,97 @@ export default function StatusBar() {
     }, [cartControls, getTotalItems, numberControls]);
 
     return (
-        <ElevationScroll>
-            <Card
-                sx={{
-                    position: "sticky",
-                    top: 10,
-                    zIndex: 10,
-                    mb: 2,
-                    display: "flex",
-                    alignItems: "center",
-                    width: "100%",
-                    pl: 2,
-                    boxSizing: "border-box",
-                    py: 1,
-                }}
-                elevation={1}
-            >
-                <Box flex={3} display="flex" gap={1} component="nav">
-                    <NavButton to="/">Beers</NavButton>
-                    <NavButton to="/product-management">
-                        Product Management
-                    </NavButton>
-                </Box>
-                <motion.div
-                    animate={cartControls}
-                    style={{
-                        display: "flex",
-                        marginRight: 10,
+        <>
+            <ViewFilter
+                open={showFilter}
+                onClose={() => setShowFilter(false)}
+            />
+            <ElevationScroll>
+                <AppBar
+                    component="nav"
+                    position="sticky"
+                    sx={{
+                        top: 10,
+                        mb: 2,
+                        boxSizing: "border-box",
                     }}
+                    elevation={1}
                 >
-                    <IconButton
-                        onClick={() => setShowCartPreview(!showCartPreview)}
-                        ref={cartRef}
-                        sx={{
-                            borderRadius: 0,
-                        }}
-                    >
-                        <Badge
-                            badgeContent={
-                                getTotalItems && (
-                                    <motion.span animate={numberControls}>
-                                        {getTotalItems}
-                                    </motion.span>
-                                )
-                            }
-                            color="primary"
+                    <Toolbar>
+                        <IconButton
+                            sx={{
+                                display: { md: "none", sm: "inline-flex" },
+                            }}
                         >
-                            <ShoppingCartIcon />
-                        </Badge>
-                    </IconButton>
-                </motion.div>
-                {showCartPreview && (
-                    <MenuCartPreview
-                        onClose={() => setShowCartPreview(false)}
-                        open={showCartPreview}
-                        ref={cartRef}
-                    />
-                )}
-            </Card>
-        </ElevationScroll>
+                            <MenuIcon />
+                        </IconButton>
+                        {showFilterIcon && (
+                            <IconButton
+                                onClick={() => setShowFilter((prev) => !prev)}
+                                sx={{
+                                    display: { md: "none", sm: "inline-flex" },
+                                }}
+                            >
+                                <TuneIcon />
+                            </IconButton>
+                        )}
+                        <Box
+                            sx={{
+                                display: {
+                                    md: "block",
+                                    sm: "none",
+                                    xs: "none",
+                                },
+                            }}
+                        >
+                            <NavButton to="/">Beers</NavButton>
+                            <NavButton to="/product-management">
+                                Product Management
+                            </NavButton>
+                        </Box>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <motion.div
+                            animate={cartControls}
+                            style={{
+                                display: "flex",
+                                marginRight: 10,
+                            }}
+                        >
+                            <IconButton
+                                onClick={() =>
+                                    setShowCartPreview(!showCartPreview)
+                                }
+                                ref={cartRef}
+                                sx={{
+                                    borderRadius: 0,
+                                }}
+                            >
+                                <Badge
+                                    badgeContent={
+                                        getTotalItems && (
+                                            <motion.span
+                                                animate={numberControls}
+                                            >
+                                                {getTotalItems}
+                                            </motion.span>
+                                        )
+                                    }
+                                    color="primary"
+                                >
+                                    <ShoppingCartIcon />
+                                </Badge>
+                            </IconButton>
+                        </motion.div>
+                        {showCartPreview && (
+                            <MenuCartPreview
+                                onClose={() => setShowCartPreview(false)}
+                                open={showCartPreview}
+                                ref={cartRef}
+                            />
+                        )}
+                    </Toolbar>
+                </AppBar>
+            </ElevationScroll>
+        </>
     );
 }

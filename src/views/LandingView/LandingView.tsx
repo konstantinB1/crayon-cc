@@ -1,7 +1,8 @@
-import { Card, CardContent, Grid, Stack, Typography } from "@mui/material";
+import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
 import LandingViewCard from "./components/LandingViewCard";
 import LandingViewFilters from "./components/LandingViewFilters";
 import useLandingViewData from "./hooks/useLandingViewData";
+import LandingViewSearch from "./components/LandingViewSearch";
 
 export default function LandingView() {
     const { beers, rootRef, fetchedInitial } = useLandingViewData();
@@ -19,6 +20,7 @@ export default function LandingView() {
                     position="sticky"
                     zIndex={1000}
                     sx={{
+                        display: { md: "block", sm: "none", xs: "none" },
                         top: {
                             lg: 10,
                             md: 10,
@@ -33,6 +35,9 @@ export default function LandingView() {
                     </Card>
                 </Grid>
                 <Grid item xl={14} md={14} lg={14}>
+                    <Box>
+                        <LandingViewSearch />
+                    </Box>
                     <Grid container spacing={4} ref={rootRef}>
                         {fetchedInitial && beers.length === 0 && (
                             <Grid
@@ -50,16 +55,17 @@ export default function LandingView() {
                         {beers.map((beer) => (
                             <Grid
                                 sx={(theme) => ({
+                                    cursor: "pointer",
                                     transition: theme.transitions.create(
-                                        "transform",
+                                        "all",
                                         {
                                             duration:
                                                 theme.transitions.duration
-                                                    .shortest,
+                                                    .short,
                                         },
                                     ),
                                     "&:hover": {
-                                        transform: "scale(1.01)",
+                                        transform: "scale(1.02)",
                                     },
                                 })}
                                 item
