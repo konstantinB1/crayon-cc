@@ -33,7 +33,11 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
             }}
         >
             <Box ref={rootRef} data-id={data.id}>
-                <ImageRenderer ref={rootRef} image={data.image} />
+                <ImageRenderer
+                    name={data.name}
+                    ref={rootRef}
+                    image={data.image}
+                />
                 <TextRenderer
                     id={data.id}
                     name={data.name}

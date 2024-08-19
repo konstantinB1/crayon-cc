@@ -9,10 +9,11 @@ export type AddButtonProps = {
 
 export default function RemoveButton({ id }: AddButtonProps) {
     const removeFromCart = useBoundStore((state) => state.remove);
+    const fetched = useBoundStore((state) => state.fetchedInitial);
     const count = useBoundStore((state) => state.getById(id));
     const appStatus = useBoundStore((state) => state.appStatus);
 
-    if (appStatus === AppStatus.offline || AppStatus.apiError) {
+    if (appStatus === AppStatus.offline || appStatus === AppStatus.apiError) {
         return null;
     }
 
@@ -26,6 +27,10 @@ export default function RemoveButton({ id }: AddButtonProps) {
             }}
         >
             <IconButton
+                disabled={!fetched}
+                aria-label="Remove from cart"
+                aria-expanded={count > 0}
+                id={`remove-btn-${id}`}
                 size="small"
                 color="error"
                 onClick={(e: { stopPropagation: () => void }) => {

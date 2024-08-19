@@ -13,12 +13,15 @@ export default function AddButton({ id, quantity, onAdd }: AddButtonProps) {
     const addToCart = useBoundStore((state) => state.add);
     const appStatus = useBoundStore((state) => state.appStatus);
 
-    if (appStatus === AppStatus.offline || AppStatus.apiError) {
+    if (appStatus === AppStatus.offline || appStatus === AppStatus.apiError) {
         return null;
     }
 
     return (
         <IconButton
+            aria-label="Add to cart"
+            aria-expanded={quantity > 0}
+            id={`add-btn-${id}`}
             color="primary"
             size="small"
             onClick={(e: { stopPropagation: () => void }) => {

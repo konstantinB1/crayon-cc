@@ -26,12 +26,10 @@ export default function LandingViewFilters() {
     const { sortKey: currentSortKey } = formState;
 
     return (
-        <Stack position="sticky" top={10}>
-            <Typography variant="body1" mb={2}>
-                Filters
-            </Typography>
+        <Stack position="sticky" top={10} component="aside">
             <Stack display="flex" flexDirection="column" gap={2}>
                 <TextField
+                    id="sort-by"
                     disabled={fetching}
                     value={currentSortKey}
                     onChange={(e) => sortBy(e.target.value as SortKey)}

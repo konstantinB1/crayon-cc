@@ -33,6 +33,7 @@ export default function ProductDetailImage({
             width="100%"
             height="100%"
             component="img"
+            alt={currentBeer?.name}
             src={image}
             sx={{
                 objectFit: "contain",
