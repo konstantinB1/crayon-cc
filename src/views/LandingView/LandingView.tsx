@@ -1,11 +1,13 @@
 import { Box, Card, CardContent, Grid, Stack, Typography } from "@mui/material";
-import LandingViewCard from "./components/LandingViewCard";
 import LandingViewFilters from "./components/LandingViewFilters";
 import useLandingViewData from "./hooks/useLandingViewData";
 import LandingViewSearch from "./components/LandingViewSearch";
+import { useRef } from "react";
+import LandingViewVirtual from "./components/LandingViewVirtual/LandingViewVirtual";
 
 export default function LandingView() {
     const { beers, rootRef, fetchedInitial } = useLandingViewData();
+    const gridRef = useRef<HTMLDivElement>(null);
 
     return (
         <Stack>
@@ -34,11 +36,11 @@ export default function LandingView() {
                         </CardContent>
                     </Card>
                 </Grid>
-                <Grid item xl={14} md={14} lg={14}>
+                <Grid item xl={14} md={14} lg={14} ref={rootRef}>
                     <Box>
                         <LandingViewSearch />
                     </Box>
-                    <Grid container spacing={4} ref={rootRef}>
+                    <Grid container spacing={4} ref={gridRef}>
                         {fetchedInitial && beers.length === 0 && (
                             <Grid
                                 data-testid="no-data"
@@ -52,7 +54,8 @@ export default function LandingView() {
                                 </Typography>
                             </Grid>
                         )}
-                        {beers.map((beer) => (
+                        <LandingViewVirtual ref={gridRef} beers={beers} />
+                        {/* {beers.map((beer) => (
                             <Grid
                                 sx={(theme) => ({
                                     cursor: "pointer",
@@ -79,7 +82,7 @@ export default function LandingView() {
                             >
                                 <LandingViewCard data={beer} />
                             </Grid>
-                        ))}
+                        ))} */}
                     </Grid>
                 </Grid>
             </Grid>
