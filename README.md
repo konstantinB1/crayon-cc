@@ -1,15 +1,10 @@
-# 🚀 Welcome to your new awesome project!
+# Hi
 
-This project has been created using **webpack-cli**, you can now run
+First of all thank you for this fun challenging CC, i had a blast. Not just saying that.
 
-```
-npm run build
-```
+# Usage
 
-or
+Clone the repo, and then run `npm ci`
 
-```
-yarn build
-```
-
-to bundle your application
+`dev` - runs the dev server
+`build:prod` - builds the project
