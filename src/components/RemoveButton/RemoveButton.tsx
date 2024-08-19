@@ -7,8 +7,8 @@ export type AddButtonProps = {
 };
 
 export default function RemoveButton({ id }: AddButtonProps) {
-    const { remove: removeFromCart, getById } = useBoundStore();
-    const count = getById(id);
+    const removeFromCart = useBoundStore((state) => state.remove);
+    const count = useBoundStore((state) => state.getById(id));
 
     return (
         <Badge

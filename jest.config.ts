@@ -31,10 +31,10 @@ const config: Config = {
                     },
                 },
                 module: {
-                    type: "commonjs", // Ensure Jest gets the CommonJS modules
+                    type: "commonjs",
                     strict: true,
                     strictMode: true,
-                    noInterop: false, // Ensure module interop is enabled
+                    noInterop: false,
                 },
             },
         ],

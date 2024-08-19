@@ -3,7 +3,6 @@ import { forwardRef, RefObject, useRef } from "react";
 import useImageLoader from "./hooks/useImageLoader";
 
 export type ImageRendererProps = {
-    id: number;
     image: string;
 };
 
@@ -32,6 +31,7 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
             >
                 {loading && (
                     <Skeleton
+                        data-testid="image-skeleton"
                         width={180}
                         height={180}
                         variant="rectangular"
@@ -43,6 +43,7 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
                 )}
                 {!loading && (
                     <CardMedia
+                        data-testid="image"
                         ref={imgRef}
                         component="img"
                         image={img}

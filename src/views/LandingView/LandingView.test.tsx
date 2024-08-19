@@ -16,7 +16,6 @@ import LandingView from "./LandingView";
 import { placeholderBeers } from "./LandingView.utils";
 import { renderWithThemeProvider } from "@/utils/render-test-utils";
 
-// make useLandingViewData to have mock implementation
 const useLandingViewDataMock = useLandingViewData as jest.Mock;
 
 describe("LandingView", () => {

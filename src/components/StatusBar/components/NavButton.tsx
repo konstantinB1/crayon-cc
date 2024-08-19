@@ -1,10 +1,10 @@
 import { Button } from "@mui/material";
 import { ReactNode } from "react";
-import { Link } from "react-router-dom";
+import { Link, LinkProps } from "react-router-dom";
 
 export type NavButtonProps = {
     children: ReactNode;
-    to: string;
+    to: LinkProps["to"];
 };
 
 export default function NavButton({ children, to }: NavButtonProps) {

@@ -10,16 +10,15 @@ import {
 } from "@mui/material";
 import { forwardRef, RefObject } from "react";
 import MenuCartTable from "./MenuCartTable";
-import ButtonCheckout from "./components/ButtonCheckout";
+import ButtonCheckout from "./ButtonCheckout";
 
 const MenuCartPreview = forwardRef<
     HTMLButtonElement,
     { open: boolean; onClose: () => void }
 >(({ open, onClose }, ref: RefObject<HTMLButtonElement>) => {
-    const getCartItems = useBoundStore((state) => state.getCartItems);
-    const getTotalPrice = useBoundStore((state) => state.getTotalPrice);
+    const cartItems = useBoundStore((state) => state.getCartItems());
+    const totalPrice = useBoundStore((state) => state.getTotalPrice());
 
-    const cartItems = getCartItems();
     const hasItems = cartItems.length > 0;
 
     return (
@@ -99,7 +98,7 @@ const MenuCartPreview = forwardRef<
                                         variant="h6"
                                         color="success.main"
                                     >
-                                        {getTotalPrice()}
+                                        {totalPrice}
                                     </Typography>
                                 </Grid>
                                 <Grid

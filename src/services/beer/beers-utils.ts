@@ -18,25 +18,14 @@ export enum SortKey {
 
 export const sortBeers = (draft: Beer[], key: SortKey) => {
     const [prop, order] = key.split("-") as [keyof Beer, OrderBy];
-
-    return sortObject(
-        draft.map(({ price, ...rest }) => ({
-            ...rest,
-            price: priceToInt(price),
-        })),
-        prop,
-        order,
-        sortByNumbersAndStrings,
-    );
+    return sortObject(draft, prop, order, sortByNumbersAndStrings);
 };
 
-export const filterBeers = (beers: Beer[], value: number[]) => {
-    const [min, max] = value;
-    return beers.filter((beer) => {
+export const filterBeers = (beers: Beer[], [min, max]: number[]) =>
+    beers.filter((beer) => {
         const price = priceToInt(beer.price);
         return price >= min && price <= max;
     });
-};
 
 const ensureValidInt = (value: number, def: number = 0) =>
     value === Infinity || value === -Infinity || isNaN(value) ? def : value;

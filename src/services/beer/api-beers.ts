@@ -57,8 +57,7 @@ A fleeting dance, a liquid fire,
 In beer, we find both peace and ire.
 `;
 
-// Mutate the array, we don't care
-// about preserving it
+// Mutates the array
 function shuffle<T>(array: T[]) {
     let currentIndex = array.length;
 

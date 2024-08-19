@@ -1,5 +1,3 @@
-import * as React from "react";
-import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
@@ -29,12 +27,6 @@ function TabPanel(props) {
         </Box>
     );
 }
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.number.isRequired,
-    value: PropTypes.number.isRequired,
-};
 
 function a11yProps(index: number) {
     return {

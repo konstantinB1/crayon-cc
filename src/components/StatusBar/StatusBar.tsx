@@ -2,7 +2,7 @@ import useBoundStore from "@/store";
 import { Card, Box, IconButton, useScrollTrigger, Badge } from "@mui/material";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { cloneElement, ReactElement, useEffect, useRef, useState } from "react";
-import MenuCartPreview from "./MenuCartPreview";
+import MenuCartPreview from "./components/MenuCartPreview";
 import NavButton from "./components/NavButton";
 import { motion, useAnimation } from "framer-motion";
 
@@ -19,10 +19,13 @@ function ElevationScroll({ children }: { children: ReactElement }) {
 }
 
 export default function StatusBar() {
-    const cartRef = useRef<HTMLButtonElement>(null);
     const [showCartPreview, setShowCartPreview] = useState(false);
+
     const getTotalItems = useBoundStore((state) => state.getTotalItems());
+
+    const cartRef = useRef<HTMLButtonElement>(null);
     const prevItems = useRef<number | null>();
+
     const cartControls = useAnimation();
     const numberControls = useAnimation();
 

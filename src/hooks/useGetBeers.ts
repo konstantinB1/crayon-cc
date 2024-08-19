@@ -10,11 +10,8 @@ export default function useGetBeers() {
 
     const setFetching = useBoundStore((state) => state.setFetching);
     const setAllBeers = useBoundStore((state) => state.setAllBeers);
-    const setFetchInitial = useBoundStore((state) => state.setFetchInitial);
     const fetchedInitial = useBoundStore((state) => state.fetchedInitial);
     const setStatus = useBoundStore((state) => state.setAppStatus);
-
-    console.log("here");
 
     useEffect(() => {
         if (fetchedInitial) {
@@ -23,13 +20,12 @@ export default function useGetBeers() {
 
         async function tryFetchBeers() {
             try {
+                const beers = await getBeers();
+
                 if (interval.current) {
                     clearInterval(interval.current);
                 }
 
-                const beers = await getBeers();
-
-                setFetchInitial();
                 setAllBeers(beers);
                 setStatus(AppStatus.onlineWithLoadedData);
             } catch (err) {
@@ -54,5 +50,5 @@ export default function useGetBeers() {
                 clearInterval(interval.current);
             }
         };
-    }, [fetchedInitial, setAllBeers, setFetchInitial, setFetching, setStatus]);
+    }, [fetchedInitial, setAllBeers, setFetching, setStatus]);
 }

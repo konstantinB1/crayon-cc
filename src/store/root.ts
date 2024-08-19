@@ -21,9 +21,6 @@ export type BeerRootStore = {
     // source of truth for all derived states
     setAllBeers: (beers: Beer[]) => void;
 
-    // Is data ready
-    setFetchInitial: () => void;
-
     // Is fetching data
     setFetching: (fetching: boolean) => void;
 
@@ -34,11 +31,8 @@ export type BeerRootStore = {
     fetching: boolean;
 
     appStatus: AppStatus;
-    lang: string;
 
     setAppStatus: (status: AppStatus) => void;
-
-    setLang: (lang: string) => void;
 };
 
 export const createBeerRootStore: StateCreator<
@@ -48,14 +42,11 @@ export const createBeerRootStore: StateCreator<
     BeerRootStore
 > = (set) => ({
     beers: [],
-    lang: "en",
     fetching: true,
     fetchedInitial: false,
     appStatus: AppStatus.unknown,
 
-    setAllBeers: (beers: Beer[]) => set({ beers }),
-    setFetchInitial: () => set({ fetchedInitial: true }),
+    setAllBeers: (beers: Beer[]) => set({ beers, fetchedInitial: true }),
     setFetching: (fetching: boolean) => set({ fetching }),
     setAppStatus: (appStatus: AppStatus) => set({ appStatus }),
-    setLang: (lang: string) => set({ lang }),
 });

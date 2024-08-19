@@ -14,7 +14,7 @@ import useBoundStore from "@/store";
 import { formatPrice } from "@/utils/price-utils";
 
 export default function LandingViewFilters() {
-    const { fetching } = useBoundStore();
+    const fetching = useBoundStore((state) => state.fetching);
     const { clear, formState, getMinAndMaxPrice, sortBy, setPriceRange } =
         useFilter();
     const [min, max] = getMinAndMaxPrice;
