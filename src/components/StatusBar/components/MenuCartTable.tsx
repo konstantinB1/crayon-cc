@@ -6,7 +6,6 @@ import {
     Typography,
     TableBody,
     Box,
-    Divider,
 } from "@mui/material";
 import AddButton from "@/components/AddButton";
 import RemoveButton from "@/components/RemoveButton";
@@ -32,6 +31,13 @@ export default function MenuCartTable({ items }: MenuCartTableProps) {
                             xs: "block",
                             sm: "table-cell",
                         },
+
+                        p: {
+                            lg: 1,
+                            md: 1,
+                            sm: 1,
+                            xs: 0.5,
+                        },
                     },
 
                     "& tr": {
@@ -49,7 +55,17 @@ export default function MenuCartTable({ items }: MenuCartTableProps) {
                 }}
                 size="small"
             >
-                <TableHead>
+                <TableHead
+                    sx={{
+                        display: {
+                            xl: "table-header-group",
+                            lg: "table-header-group",
+                            md: "table-header-group",
+                            sm: "table-header-group",
+                            xs: "none",
+                        },
+                    }}
+                >
                     <TableRow>
                         <TableCell>
                             <Typography
@@ -59,7 +75,7 @@ export default function MenuCartTable({ items }: MenuCartTableProps) {
                                 Item
                             </Typography>
                         </TableCell>
-                        <TableCell colSpan={1}>
+                        <TableCell>
                             <Typography
                                 variant="caption"
                                 color="text.secondary"
@@ -88,11 +104,6 @@ export default function MenuCartTable({ items }: MenuCartTableProps) {
                                     <RemoveButton id={item.id} />
                                 </Box>
                             </TableCell>
-                            <Divider
-                                sx={{
-                                    my: 2,
-                                }}
-                            />
                         </TableRow>
                     ))}
                 </TableBody>

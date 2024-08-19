@@ -6,22 +6,22 @@ import { useMemo } from "react";
 export default function useMetrics() {
     const { beers } = useBoundStore();
 
-    const sortByHighestAvg = useMemo(
-        () =>
-            sortObject(
-                beers,
-                "rating.average",
-                "desc",
-                sortByNumbersAndStrings,
-            ),
-        [beers],
-    );
+    // const sortByHighestAvg = useMemo(
+    //     () =>
+    //         sortObject(
+    //             beers,
+    //             "rating.average",
+    //             "desc",
+    //             sortByNumbersAndStrings,
+    //         ),
+    //     [beers],
+    // );
 
-    const sortByLowestAvg = useMemo(
-        () =>
-            sortObject(beers, "rating.average", "asc", sortByNumbersAndStrings),
-        [beers],
-    );
+    // const sortByLowestAvg = useMemo(
+    //     () =>
+    //         sortObject(beers, "rating.average", "asc", sortByNumbersAndStrings),
+    //     [beers],
+    // );
 
     const getAllAvgByBrewery = useMemo(
         () =>

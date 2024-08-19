@@ -1,10 +1,12 @@
 import useGetImage from "@/hooks/useGetImage";
 import useBoundStore from "@/store";
-import { Box, Card, Divider, Grid, Typography } from "@mui/material";
+import { Box, Card, Grid, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import ProductDetailsActions from "./components/ProductDetailsActions";
 import IngredientsContainer from "./components/IngredientsContainer";
+import { AppStatus } from "@/store/root";
+import ProductDetailImage from "./components/ProductDetailImage";
 
 export default function ProductDetail() {
     const { id } = useParams<{ id: string }>();
@@ -16,6 +18,7 @@ export default function ProductDetail() {
     );
 
     const image = useGetImage(currentBeer?.image);
+    const appStatus = useBoundStore((state) => state.appStatus);
 
     return (
         <Grid
@@ -65,14 +68,8 @@ export default function ProductDetail() {
                                         p: 2,
                                     })}
                                 >
-                                    <Box
-                                        width="100%"
-                                        height="100%"
-                                        component="img"
-                                        src={image}
-                                        sx={{
-                                            objectFit: "contain",
-                                        }}
+                                    <ProductDetailImage
+                                        currentBeer={currentBeer}
                                     />
                                 </Box>
                             </Grid>
@@ -119,7 +116,6 @@ export default function ProductDetail() {
                                 </Box>
                             </Grid>
                         </Grid>
-                        <Divider sx={{ m: 0 }} />
                         <Box
                             p={4}
                             justifyContent="space-between"

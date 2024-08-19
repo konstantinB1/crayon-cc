@@ -7,9 +7,13 @@ import Graphs from "./components/Graphs";
 import { useState } from "react";
 import { Card } from "@mui/material";
 
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+export type TabPanelProps = {
+    children?: React.ReactNode;
+    index: number;
+    value: number;
+};
 
+function TabPanel({ children, value, index, ...other }: TabPanelProps) {
     return (
         <Box
             width="100%"

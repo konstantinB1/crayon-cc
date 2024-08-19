@@ -25,6 +25,7 @@ const MenuCartPreview = forwardRef<
         <>
             <Backdrop invisible open={open} onClick={() => onClose()} />
             <Popper
+                id="cart-preview"
                 modifiers={[
                     {
                         name: "offset",
@@ -102,6 +103,15 @@ const MenuCartPreview = forwardRef<
                                     </Typography>
                                 </Grid>
                                 <Grid
+                                    sx={{
+                                        mt: {
+                                            xl: 0,
+                                            lg: 0,
+                                            md: 0,
+                                            sm: 0,
+                                            xs: 1,
+                                        },
+                                    }}
                                     item
                                     lg={3}
                                     md={4}

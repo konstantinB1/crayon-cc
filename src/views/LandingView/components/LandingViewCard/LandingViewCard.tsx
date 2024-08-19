@@ -1,4 +1,4 @@
-import { Box, Card, CardActionArea } from "@mui/material";
+import { Box, Card } from "@mui/material";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -33,7 +33,7 @@ export default function LandingViewCard({ data }: LandingViewCardProps) {
             }}
         >
             <Box ref={rootRef} data-id={data.id}>
-                <ImageRenderer id={data.id} ref={rootRef} image={data.image} />
+                <ImageRenderer ref={rootRef} image={data.image} />
                 <TextRenderer
                     id={data.id}
                     name={data.name}

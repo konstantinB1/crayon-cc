@@ -17,7 +17,7 @@ import { Beer } from "@/services/beer/api-beers";
 import { omit } from "@/utils/object-utils";
 import { useState } from "react";
 import { Box } from "@mui/material";
-import { BeerRow, RowModel } from "./BeerTable.types";
+import { BeerRow } from "./BeerTable.types";
 import EditToolbar from "./EditToolbar";
 
 const toBeerFromRow = (row: BeerRow): Beer =>
@@ -54,7 +54,7 @@ export default function FullFeaturedCrudGrid() {
     const updateBeer = useBoundStore((state) => state.updateBeer);
     const applyFilters = useBoundStore((state) => state.applyCurrentFilter);
 
-    const [rowModesModel, setRowModesModel] = useState<RowModel>({});
+    const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
     const handleRowEditStop: GridEventListener<"rowEditStop"> = (
         params,

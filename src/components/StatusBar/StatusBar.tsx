@@ -6,6 +6,7 @@ import {
     Badge,
     AppBar,
     Toolbar,
+    Menu,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
@@ -31,10 +32,12 @@ function ElevationScroll({ children }: { children: ReactElement }) {
 
 export default function StatusBar() {
     const [showCartPreview, setShowCartPreview] = useState(false);
-    const { showFilter, showFilterIcon, setShowFilter } = useShowFilter();
+    const { showFilter, showFilterIcon, menuOpen, setMenuOpen, setShowFilter } =
+        useShowFilter();
 
     const getTotalItems = useBoundStore((state) => state.getTotalItems());
 
+    const filterBtnRef = useRef<HTMLButtonElement>(null);
     const cartRef = useRef<HTMLButtonElement>(null);
     const prevItems = useRef<number | null>();
 
@@ -68,6 +71,16 @@ export default function StatusBar() {
                 open={showFilter}
                 onClose={() => setShowFilter(false)}
             />
+            <Menu
+                open={menuOpen}
+                variant="menu"
+                anchorEl={filterBtnRef.current}
+            >
+                <NavButton to="/">Beers</NavButton>
+                <NavButton to="/product-management">
+                    Product Management
+                </NavButton>
+            </Menu>
             <ElevationScroll>
                 <AppBar
                     component="nav"
@@ -75,12 +88,21 @@ export default function StatusBar() {
                     sx={{
                         top: 10,
                         mb: 2,
+                        pr: 0,
                         boxSizing: "border-box",
                     }}
                     elevation={1}
                 >
                     <Toolbar>
                         <IconButton
+                            id="demo-positioned-button"
+                            aria-controls={
+                                menuOpen ? "main-nav-menu-mobile" : undefined
+                            }
+                            aria-haspopup="true"
+                            aria-expanded={menuOpen ? "true" : undefined}
+                            ref={filterBtnRef}
+                            onClick={() => setMenuOpen((prev) => !prev)}
                             sx={{
                                 display: { md: "none", sm: "inline-flex" },
                             }}
@@ -89,6 +111,12 @@ export default function StatusBar() {
                         </IconButton>
                         {showFilterIcon && (
                             <IconButton
+                                id="filter-btn-sm"
+                                aria-controls={
+                                    showFilter ? "filter-mobile" : undefined
+                                }
+                                aria-haspopup="true"
+                                aria-expanded={showFilter ? "true" : undefined}
                                 onClick={() => setShowFilter((prev) => !prev)}
                                 sx={{
                                     display: { md: "none", sm: "inline-flex" },
@@ -116,10 +144,14 @@ export default function StatusBar() {
                             animate={cartControls}
                             style={{
                                 display: "flex",
-                                marginRight: 10,
                             }}
                         >
                             <IconButton
+                                aria-label="cart-item"
+                                aria-controls="cart-preview"
+                                aria-expanded={
+                                    showCartPreview ? "true" : undefined
+                                }
                                 onClick={() =>
                                     setShowCartPreview(!showCartPreview)
                                 }

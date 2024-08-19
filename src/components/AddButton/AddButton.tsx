@@ -1,4 +1,5 @@
 import useBoundStore from "@/store";
+import { AppStatus } from "@/store/root";
 import AddIcon from "@mui/icons-material/Add";
 import { IconButton } from "@mui/material";
 
@@ -10,12 +11,17 @@ export type AddButtonProps = {
 
 export default function AddButton({ id, quantity, onAdd }: AddButtonProps) {
     const addToCart = useBoundStore((state) => state.add);
+    const appStatus = useBoundStore((state) => state.appStatus);
+
+    if (appStatus === AppStatus.offline || AppStatus.apiError) {
+        return null;
+    }
 
     return (
         <IconButton
             color="primary"
             size="small"
-            onClick={(e) => {
+            onClick={(e: { stopPropagation: () => void }) => {
                 e.stopPropagation();
                 onAdd?.();
                 addToCart(id, quantity);

@@ -15,7 +15,7 @@ import useFilter from "./hooks/useFilter";
 import useBoundStore from "@/store";
 
 const useFilterMock = useFilter as jest.Mock;
-const useBoundStoreMock = useBoundStore as jest.Mock;
+const useBoundStoreMock = useBoundStore as unknown as jest.Mock;
 
 describe("LandingViewFilter", () => {
     it('should call clear when "Clear" button is clicked', async () => {

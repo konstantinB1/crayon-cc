@@ -1,4 +1,5 @@
 import useBoundStore from "@/store";
+import { AppStatus } from "@/store/root";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Badge, IconButton } from "@mui/material";
 
@@ -9,6 +10,11 @@ export type AddButtonProps = {
 export default function RemoveButton({ id }: AddButtonProps) {
     const removeFromCart = useBoundStore((state) => state.remove);
     const count = useBoundStore((state) => state.getById(id));
+    const appStatus = useBoundStore((state) => state.appStatus);
+
+    if (appStatus === AppStatus.offline || AppStatus.apiError) {
+        return null;
+    }
 
     return (
         <Badge
@@ -22,7 +28,7 @@ export default function RemoveButton({ id }: AddButtonProps) {
             <IconButton
                 size="small"
                 color="error"
-                onClick={(e) => {
+                onClick={(e: { stopPropagation: () => void }) => {
                     e.stopPropagation();
                     removeFromCart(id);
                 }}
