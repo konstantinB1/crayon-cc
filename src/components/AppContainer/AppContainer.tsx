@@ -14,7 +14,6 @@ const ProductManagement = lazy(() => import("@/views/ProductManagement"));
 
 export default function AppContainer() {
     const appStatus = useBoundStore((state) => state.appStatus);
-    const fetching = useBoundStore((state) => state.fetching);
 
     return (
         <Container

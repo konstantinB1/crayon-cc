@@ -1,11 +1,9 @@
-import useGetImage from "@/hooks/useGetImage";
 import useBoundStore from "@/store";
 import { Box, Card, Grid, Typography } from "@mui/material";
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import ProductDetailsActions from "./components/ProductDetailsActions";
 import IngredientsContainer from "./components/IngredientsContainer";
-import { AppStatus } from "@/store/root";
 import ProductDetailImage from "./components/ProductDetailImage";
 
 export default function ProductDetail() {
@@ -16,9 +14,6 @@ export default function ProductDetail() {
         () => beers.find((beer) => beer.id === Number(id)),
         [beers, id],
     );
-
-    const image = useGetImage(currentBeer?.image);
-    const appStatus = useBoundStore((state) => state.appStatus);
 
     return (
         <Grid
