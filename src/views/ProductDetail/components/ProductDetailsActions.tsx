@@ -1,14 +1,10 @@
-import { Box, TextField, IconButton, Badge } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useState } from "react";
-import AddIcon from "@mui/icons-material/Add";
-import DeleteIcon from "@mui/icons-material/Delete";
-import useBoundStore from "@/store";
+import RemoveButton from "@/components/RemoveButton";
+import AddButton from "@/components/AddButton";
 
 export default function ProductDetailsActions({ id = 0 }: { id: number }) {
     const [quantity, setQuantity] = useState(1);
-    const { add: addToCart, getById, remove: removeFromCart } = useBoundStore();
-
-    const count = getById(id);
 
     return (
         <Box display="flex" alignItems="center" gap={2}>
@@ -42,39 +38,8 @@ export default function ProductDetailsActions({ id = 0 }: { id: number }) {
                 value={quantity}
             />
 
-            <IconButton
-                color="primary"
-                size="small"
-                onClick={() => addToCart(id, quantity)}
-                sx={{
-                    borderRadius: 1,
-                    border: "1px solid",
-                    borderColor: "primary.main",
-                }}
-            >
-                <AddIcon fontSize="small" />
-            </IconButton>
-            <Badge
-                overlap="rectangular"
-                badgeContent={count}
-                color="error"
-                sx={{
-                    visibility: count > 0 ? "visible" : "hidden",
-                }}
-            >
-                <IconButton
-                    size="small"
-                    color="error"
-                    onClick={() => removeFromCart(id)}
-                    sx={{
-                        borderRadius: 1,
-                        border: "1px solid",
-                        borderColor: "error.main",
-                    }}
-                >
-                    <DeleteIcon fontSize="small" />
-                </IconButton>
-            </Badge>
+            <AddButton id={id} quantity={quantity} />
+            <RemoveButton id={id} />
         </Box>
     );
 }
