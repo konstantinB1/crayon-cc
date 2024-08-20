@@ -51,6 +51,7 @@ export default function LandingView() {
                         <Grid
                             sx={(theme) => ({
                                 cursor: "pointer",
+                                willChange: "transform",
                                 transition: theme.transitions.create("all", {
                                     duration: theme.transitions.duration.short,
                                 }),

@@ -35,9 +35,9 @@ const MenuCartPreview = forwardRef<
                     },
                 ]}
                 placement="bottom-end"
-                sx={{
-                    zIndex: 100,
-                }}
+                sx={(theme) => ({
+                    zIndex: theme.zIndex.modal + 1,
+                })}
                 anchorEl={ref.current}
                 open={open}
             >
@@ -54,25 +54,23 @@ const MenuCartPreview = forwardRef<
                         },
                     }}
                 >
-                    <Box>
-                        {!hasItems && (
-                            <Box
-                                p={2}
-                                display="flex"
-                                justifyContent="center"
-                                alignItems="center"
-                            >
-                                <Typography variant="body1">
-                                    No items in cart
-                                </Typography>
-                            </Box>
-                        )}
-                        {hasItems && (
-                            <Box p={1}>
-                                <MenuCartTable items={cartItems} />
-                            </Box>
-                        )}
-                    </Box>
+                    {!hasItems && (
+                        <Box
+                            p={3}
+                            sx={(theme) => ({
+                                ...theme.mixins.flexCenter,
+                            })}
+                        >
+                            <Typography variant="body1">
+                                No items in cart
+                            </Typography>
+                        </Box>
+                    )}
+                    {hasItems && (
+                        <Box p={1}>
+                            <MenuCartTable items={cartItems} />
+                        </Box>
+                    )}
                     {hasItems && (
                         <>
                             <Divider
@@ -103,7 +101,13 @@ const MenuCartPreview = forwardRef<
                                     </Typography>
                                 </Grid>
                                 <Grid
-                                    sx={{
+                                    item
+                                    lg={3}
+                                    md={4}
+                                    sm={6}
+                                    xs={12}
+                                    sx={(theme) => ({
+                                        ...theme.mixins.flexCenter,
                                         mt: {
                                             xl: 0,
                                             lg: 0,
@@ -111,15 +115,7 @@ const MenuCartPreview = forwardRef<
                                             sm: 0,
                                             xs: 1,
                                         },
-                                    }}
-                                    item
-                                    lg={3}
-                                    md={4}
-                                    sm={6}
-                                    xs={12}
-                                    display="flex"
-                                    justifyContent="center"
-                                    alignItems="center"
+                                    })}
                                 >
                                     <ButtonCheckout />
                                 </Grid>

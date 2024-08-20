@@ -1,7 +1,4 @@
-import {
-    getMinMaxPrice as _getMinAndMaxPrice,
-    SortKey,
-} from "@/services/beer/beers-utils";
+import { getMinMaxPrice as _getMinAndMaxPrice } from "@/services/beer/beers-utils";
 import useBoundStore from "@/store";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 
@@ -13,7 +10,8 @@ export default function useFilter() {
     const applyInitialFilter = useBoundStore(
         (state) => state.applyInitialFilter,
     );
-    const sortAction = useBoundStore((state) => state.sortAction);
+
+    const sortBy = useBoundStore((state) => state.sortAction);
     const updatePriceRange = useBoundStore((state) => state.updatePriceRange);
     const formState = useBoundStore((state) => state.formState);
     const _setPriceRange = useBoundStore((state) => state.setPriceRange);
@@ -24,13 +22,6 @@ export default function useFilter() {
     const clear = useCallback(() => {
         setViewBeers(beers);
     }, [beers, setViewBeers]);
-
-    const sortBy = useCallback(
-        (key: SortKey) => {
-            sortAction(key);
-        },
-        [sortAction],
-    );
 
     const setPriceRange = useCallback(
         (range: number[]) => _setPriceRange(beers, range),

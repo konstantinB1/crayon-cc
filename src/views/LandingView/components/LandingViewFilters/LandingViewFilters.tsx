@@ -13,12 +13,18 @@ import { SortKey } from "@/services/beer/beers-utils";
 import useBoundStore from "@/store";
 import { formatPrice } from "@/utils/price-utils";
 
+type LandingViewFiltersProps = {
+    onChange?: () => void;
+};
+
 /**
  * TODO Make 2 modes - onChange and onSubmit
  * So when on low screen the filters would
  * be only applied when the user submits the form
  */
-export default function LandingViewFilters() {
+export default function LandingViewFilters({
+    onChange,
+}: LandingViewFiltersProps) {
     const fetching = useBoundStore((state) => state.fetching);
     const { clear, formState, getMinAndMaxPrice, sortBy, setPriceRange } =
         useFilter();
@@ -32,7 +38,10 @@ export default function LandingViewFilters() {
                     id="sort-by"
                     disabled={fetching}
                     value={currentSortKey}
-                    onChange={(e) => sortBy(e.target.value as SortKey)}
+                    onChange={(e) => {
+                        sortBy(e.target.value as SortKey);
+                        onChange?.();
+                    }}
                     select
                     label="Sort by"
                     size="small"

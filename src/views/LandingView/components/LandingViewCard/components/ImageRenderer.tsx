@@ -16,19 +16,17 @@ const ImageRenderer = forwardRef<HTMLDivElement, ImageRendererProps>(
         return (
             <Box
                 position="relative"
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
                 margin="auto"
                 my={4}
-                sx={{
+                sx={(theme) => ({
+                    ...theme.mixins.flexCenter,
                     width: {
                         lg: 180,
                     },
                     height: {
                         lg: 180,
                     },
-                }}
+                })}
             >
                 {loading && (
                     <Skeleton

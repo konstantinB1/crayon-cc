@@ -5,7 +5,10 @@ import { useDebouncedCallback } from "use-debounce";
 
 export default function LandingViewSearch() {
     const searchAction = useBoundStore((state) => state.searchAction);
-    const debounceSearch = useDebouncedCallback(searchAction, 300);
+    const debounceSearch = useDebouncedCallback(searchAction, 300, {
+        leading: true,
+        trailing: false,
+    });
 
     return (
         <Box mb={2}>

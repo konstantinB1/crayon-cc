@@ -1,69 +1,34 @@
 import useBoundStore from "@/store";
-import {
-    Box,
-    IconButton,
-    useScrollTrigger,
-    Badge,
-    AppBar,
-    Toolbar,
-    Menu,
-} from "@mui/material";
+import { Box, IconButton, Badge, AppBar, Toolbar, Menu } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { cloneElement, ReactElement, useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import MenuCartPreview from "./components/MenuCartPreview";
 import NavButton from "./components/NavButton";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import TuneIcon from "@mui/icons-material/Tune";
 import useShowFilter from "./hooks/useShowFilter";
 import ViewFilter from "./components/ViewFilter";
-
-function ElevationScroll({ children }: { children: ReactElement }) {
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-        target: window,
-    });
-
-    return cloneElement(children, {
-        elevation: trigger ? 1 : 0,
-    });
-}
+import useAnimations from "./hooks/useAnimations";
+import ElevationScroll from "./components/ElevationScrollHelper";
 
 export default function StatusBar() {
-    const [showCartPreview, setShowCartPreview] = useState(false);
-    const { showFilter, showFilterIcon, menuOpen, setMenuOpen, setShowFilter } =
-        useShowFilter();
+    const {
+        showFilter,
+        showFilterIcon,
+        menuOpen,
+        setMenuOpen,
+        setShowFilter,
+        showCartPreview,
+        setShowCartPreview,
+    } = useShowFilter();
 
     const getTotalItems = useBoundStore((state) => state.getTotalItems());
 
     const filterBtnRef = useRef<HTMLButtonElement>(null);
     const cartRef = useRef<HTMLButtonElement>(null);
-    const prevItems = useRef<number | null>();
 
-    const cartControls = useAnimation();
-    const numberControls = useAnimation();
-
-    useEffect(() => {
-        if (getTotalItems > prevItems.current && prevItems.current !== null) {
-            cartControls.start({
-                scale: [1, 1.1, 1],
-                transition: {
-                    duration: 0.5,
-                    ease: "circOut",
-                },
-            });
-            numberControls.start({
-                scale: [1, 1.1, 1],
-                transition: {
-                    duration: 0.5,
-                    ease: "circOut",
-                },
-            });
-        }
-
-        prevItems.current = getTotalItems;
-    }, [cartControls, getTotalItems, numberControls]);
+    const { cartControls, numberControls } = useAnimations(getTotalItems);
 
     return (
         <>

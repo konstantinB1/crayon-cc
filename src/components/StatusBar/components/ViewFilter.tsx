@@ -16,7 +16,7 @@ export default function ViewFilter({ open, onClose }: ViewFilterProps) {
                 </IconButton>
             </Box>
             <Box p={10}>
-                <LandingViewFilters />
+                <LandingViewFilters onChange={onClose} />
             </Box>
         </Drawer>
     );
